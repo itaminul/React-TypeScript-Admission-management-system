@@ -2,17 +2,33 @@ import { Button, Checkbox, Col, Form, Input, Row } from "antd";
 import './login.scss'
 import LoginDataType from "./LoginType";
 import { useNavigate} from 'react-router-dom'
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/features/authSlice";
+
 
 function Login() {
 
 const navigate = useNavigate();
+const [loginError, setLoginError] = useState<boolean>(false);
+const dispatch = useDispatch();
+
+const isLoggedIn = true;
+
+
 const onFinish = (values: LoginDataType) => {
   const usernmae = values.username;
   const password = values.password;
 
   if(usernmae === 'admin' && password == '123456'){
-    console.log("Success:", values);
+    
+  if(isLoggedIn) {
+    dispatch(login());
     return navigate('/dashboard')
+  }else{
+    setLoginError(true);
+  }
+   
   }else{
 
   }
