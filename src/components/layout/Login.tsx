@@ -2,9 +2,10 @@ import { Button, Checkbox, Col, Form, Input, Row } from "antd";
 import './login.scss'
 import LoginDataType from "./LoginType";
 import { useNavigate} from 'react-router-dom'
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../redux/features/authSlice";
+import { RootState } from "../../redux/store";
 
 
 function Login() {
@@ -12,29 +13,35 @@ function Login() {
 const navigate = useNavigate();
 const [loginError, setLoginError] = useState<boolean>(false);
 const dispatch = useDispatch();
-
+const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticate);
 const isLoggedIn = true;
 
+useEffect(() => {
+  const isAuthenticatedInStorage = sessionStorage.getItem('isAuthenticated');
+  if(isAuthenticatedInStorage === 'true') {
+    dispatch(login());
+  }
+}, [dispatch]);
 
 const onFinish = (values: LoginDataType) => {
   const usernmae = values.username;
   const password = values.password;
 
-  if(usernmae === 'admin' && password == '123456'){
-    
-  if(isLoggedIn) {
+  if(usernmae === 'admin' && password == '123456'){   
+
     dispatch(login());
-    return navigate('/dashboard')
-  }else{
-    setLoginError(true);
-  }
-   
+    localStorage.setItem("isAuthenticated", 'true');
+
   }else{
 
   }
 
 
 };
+
+if(isAuthenticated) {
+      return navigate("/dashboard");
+}
 
 const onFinishFailed = (errorInfo: any) => {
   console.log("Failed:", errorInfo);
