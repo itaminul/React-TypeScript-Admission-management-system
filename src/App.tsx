@@ -6,25 +6,25 @@ import AdminDashbord from './components/layout/AdminDashboard';
 import NoMatch from './components/layout/NoMatch';
 import {useSelector} from 'react-redux';
 import { RootState } from './redux/store';
+import PrivateRoute from './route/PrivateRoute';
 
 function App() {
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticate);
   return (
     <>
-    {isAuthenticated ? (
-       <Login />
-    ) : (     
-    <Routes>
-       <Route path="*" element={<NoMatch />} />
-    {/* <Route path="/" element={<Layout />}> */}
-      <Route path="/dashboard" element={<AdminDashbord />} />
-      {/* <Route path="*" element={<NoMatch />} /> */}
-    {/* </Route> */}
-    </Routes>
-    )}
-     
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+        {/* <Route path="*" element={<NoMatch />} /> */}
+        {/* <Route path="/" element={<Layout />}> */}
+        <Route path="/" element={<PrivateRoute />}>
+          <Route path="/dashboard" element={<AdminDashbord />} />
+        </Route>
+        {/* <Route path="*" element={<NoMatch />} /> */}
+        {/* </Route> */}
+      </Routes>
     </>
-  )
+  );
 }
 
 export default App
