@@ -1,6 +1,29 @@
-import { Layout } from "antd";
+import { Avatar, Dropdown, Layout, Menu } from "antd";
+import {
+   MenuUnfoldOutlined,
+  MenuFoldOutlined,
+  UserOutlined,
+  LogoutOutlined,
+} from "@ant-design/icons";
+import { useState } from "react";
+import React from "react";
 const { Header } = Layout;
 function TopNavigation() {
+  const [collapsed, setCollapsed] = useState(false);
+  const toggleCollapsed = () => {
+    setCollapsed(!collapsed);
+  }
+const handleLogout= () => {
+
+}
+   const menu = (
+     <Menu>
+       <Menu.Item key="1" onClick={handleLogout} icon={<LogoutOutlined />}>
+         Logout
+       </Menu.Item>
+     </Menu>
+   );
+   
   return (
     <>
       <Header
@@ -17,6 +40,12 @@ function TopNavigation() {
         }}
       >
         Header
+
+        <div style={{ float: "right", marginRight: "24px" }}>
+          <Dropdown overlay={menu}>
+            <Avatar size="small" icon={<UserOutlined />} />
+          </Dropdown>
+        </div>
       </Header>
     </>
   );
