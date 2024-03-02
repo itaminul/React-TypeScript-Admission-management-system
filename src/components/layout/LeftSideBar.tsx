@@ -1,12 +1,15 @@
 import { Button, Layout, Menu } from "antd";
+import {Link} from "react-router-dom";
 import {
   UploadOutlined,
   UserOutlined,
   VideoCameraOutlined,
   MenuUnfoldOutlined,
   MenuFoldOutlined,
+  MailOutlined
 } from "@ant-design/icons";
 import { useState } from "react";
+import SubMenu from "antd/es/menu/SubMenu";
 const { Sider } = Layout;
 
 function LeftSideBar() {
@@ -41,14 +44,20 @@ function LeftSideBar() {
           Dashboard
         </div>
         <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
-          <Menu.Item key="1" icon={<UserOutlined />}>
-            Option 1
+        <SubMenu key="sub1" icon={<MailOutlined />} title="Setup">
+        <Menu.Item key="1">Department</Menu.Item>
+        <Menu.Item key="2">Course Setup</Menu.Item>
+      </SubMenu>
+      <SubMenu key="sub1" icon={<MailOutlined />} title="Student">
+      <Link to="/student-info">
+         <Menu.Item key="2">
+            Student Setup
           </Menu.Item>
-          <Menu.Item key="2" icon={<VideoCameraOutlined />}>
+         </Link>
+      </SubMenu>      
+        
+          <Menu.Item key="3" icon={<VideoCameraOutlined />}>
             Option 2
-          </Menu.Item>
-          <Menu.Item key="3" icon={<UploadOutlined />}>
-            Option 3
           </Menu.Item>
         </Menu>
       </Sider>

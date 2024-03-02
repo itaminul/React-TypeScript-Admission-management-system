@@ -3,9 +3,14 @@ import './adminDashboard.scss'
 import LeftSideBar from './LeftSideBar';
 import TopNavigation from './TopNavigation';
 import PageFooter from './PageFooter';
+import { ReactNode } from 'react';
 const { Content} = Layout;
 
-function AdminDashbord() {
+interface LayoutProps {
+  children: ReactNode;
+}
+
+function Layouts({ children }: LayoutProps) {
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <LeftSideBar />
@@ -16,7 +21,7 @@ function AdminDashbord() {
             className="site-layout-background"
             style={{ padding: 24, minHeight: 360 }}
           >
-            Content
+            {children}
           </div>
         </Content>
       <PageFooter />
@@ -25,4 +30,4 @@ function AdminDashbord() {
   );
 };
 
-export default AdminDashbord;
+export default Layouts;
