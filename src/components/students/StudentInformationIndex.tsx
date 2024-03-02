@@ -1,10 +1,9 @@
 import Layouts from "../layout/Layouts";
 function StudentInformationIndex() {
     return(
-        <>
-        
+        <>        
            <Layouts>
-           Student Information
+           Student Information 
            </Layouts>
         </>
     )
