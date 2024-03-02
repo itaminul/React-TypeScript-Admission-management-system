@@ -45,7 +45,9 @@ function LeftSideBar() {
         </div>
         <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
         <SubMenu key="sub1" icon={<MailOutlined />} title="Setup">
+        <Link  to='/department-setup'>
         <Menu.Item key="1">Department</Menu.Item>
+        </Link>
         <Menu.Item key="2">Course Setup</Menu.Item>
       </SubMenu>
       <SubMenu key="sub1" icon={<MailOutlined />} title="Student">

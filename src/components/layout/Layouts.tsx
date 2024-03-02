@@ -16,10 +16,10 @@ function Layouts({ children }: LayoutProps) {
       <LeftSideBar />
       <Layout className="site-layout">
       <TopNavigation />
-        <Content style={{ margin: "0 16px" }}>
+        <Content style={{ margin: "0 0px" }}>
           <div
             className="site-layout-background"
-            style={{ padding: 24, minHeight: 360 }}
+            style={{ padding: '50px 0px 0px 0px', minHeight: 360, width: "170vh", marginLeft: "-770px" }}
           >
             {children}
           </div>

@@ -7,6 +7,7 @@ import { RootState } from './redux/store';
 import PrivateRoute from './route/PrivateRoute';
 import StudentInformationIndex from './components/students/StudentInformationIndex';
 import Layouts from './components/layout/Layouts';
+import DepartmentSetupIndex from './components/setup/department/DepartmentSetupIndex';
 
 function App() {
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticate);
@@ -21,6 +22,7 @@ function App() {
         <Route path="*" element={<NoMatch />} />
           <Route path="/dashboard" element={<Layouts children={undefined} />} />
           <Route path='/student-info' element={<StudentInformationIndex />} />
+          <Route path='/department-setup' element={<DepartmentSetupIndex />}/>
         </Route>
         {/* <Route path="*" element={<NoMatch />} /> */}
         {/* </Route> */}
