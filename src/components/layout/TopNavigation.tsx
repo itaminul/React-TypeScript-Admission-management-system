@@ -39,8 +39,6 @@ const handleLogout= () => {
           width: "100%",
         }}
       >
-        Header
-
         <div style={{ float: "right", marginRight: "24px" }}>
           <Dropdown overlay={menu}>
             <Avatar size="small" icon={<UserOutlined />} />
