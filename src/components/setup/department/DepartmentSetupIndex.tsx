@@ -1,10 +1,11 @@
 import Layouts from "../../layout/Layouts";
+import DepartmentTable from "./DepartmentTable";
 
 function DepartmentSetupIndex() {
     return(
         <>
             <Layouts>
-            DepartmentSetupIndex
+                <DepartmentTable />
             </Layouts>
         </>
     )

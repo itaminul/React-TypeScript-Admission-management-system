@@ -19,7 +19,7 @@ function Layouts({ children }: LayoutProps) {
         <Content style={{ margin: "0 0px" }}>
           <div
             className="site-layout-background"
-            style={{ padding: '50px 0px 0px 0px', minHeight: 360, width: "170vh", marginLeft: "-770px" }}
+            style={{ padding: '50px 0px 0px 0px', minHeight: 360, width: "160vh", marginLeft: "-700px" }}
           >
             {children}
           </div>
