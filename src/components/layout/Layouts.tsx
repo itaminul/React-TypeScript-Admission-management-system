@@ -1,4 +1,4 @@
-import { Layout } from 'antd';
+import { Breadcrumb, Layout } from 'antd';
 import './adminDashboard.scss'
 import LeftSideBar from './LeftSideBar';
 import TopNavigation from './TopNavigation';
@@ -15,16 +15,37 @@ function Layouts({ children }: LayoutProps) {
     <Layout style={{ minHeight: "100vh" }}>
       <LeftSideBar />
       <Layout className="site-layout">
-      <TopNavigation />
+        <TopNavigation />
+        <Breadcrumb
+          items={[
+            {
+              title: "Home",
+            },
+            {
+              title: <a href="">Application Center</a>,
+            },
+            {
+              title: <a href="">Application List</a>,
+            },
+            {
+              title: "An Application",
+            },
+          ]}
+        />
         <Content style={{ margin: "0 0px" }}>
           <div
             className="site-layout-background"
-            style={{ padding: '50px 0px 0px 0px', minHeight: 360, width: "160vh", marginLeft: "-700px" }}
+            style={{
+              padding: "50px 0px 0px 0px",
+              minHeight: 360,
+              width: "160vh",
+              marginLeft: "-700px",
+            }}
           >
             {children}
           </div>
         </Content>
-      <PageFooter />
+        <PageFooter />
       </Layout>
     </Layout>
   );
