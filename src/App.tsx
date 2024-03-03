@@ -8,6 +8,7 @@ import PrivateRoute from './route/PrivateRoute';
 import StudentInformationIndex from './components/students/StudentInformationIndex';
 import Layouts from './components/layout/Layouts';
 import DepartmentSetupIndex from './components/setup/department/DepartmentSetupIndex';
+import Breadcrumbs from './components/layout/Breadcrumbs';
 
 function App() {
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticate);
@@ -19,6 +20,7 @@ function App() {
         <Route path="*" element={<NoMatch />} />
         {/* <Route path="/" element={<Layout />}> */}
         <Route path="/" element={<PrivateRoute />}>
+          {/* <Breadcrumbs /> */}
         <Route path="*" element={<NoMatch />} />
           <Route path="/dashboard" element={<Layouts children={undefined} />} />
           <Route path='/student-info' element={<StudentInformationIndex />} />

@@ -1,9 +1,10 @@
-import { Breadcrumb, Layout } from 'antd';
+import { Layout } from 'antd';
 import './adminDashboard.scss'
 import LeftSideBar from './LeftSideBar';
 import TopNavigation from './TopNavigation';
 import PageFooter from './PageFooter';
 import { ReactNode } from 'react';
+import Breadcrumbs from './Breadcrumbs';
 const { Content} = Layout;
 
 interface LayoutProps {
@@ -16,22 +17,7 @@ function Layouts({ children }: LayoutProps) {
       <LeftSideBar />
       <Layout className="site-layout">
         <TopNavigation />
-        <Breadcrumb
-          items={[
-            {
-              title: "Home",
-            },
-            {
-              title: <a href="">Application Center</a>,
-            },
-            {
-              title: <a href="">Application List</a>,
-            },
-            {
-              title: "An Application",
-            },
-          ]}
-        />
+        <Breadcrumbs />
         <Content style={{ margin: "0 0px" }}>
           <div
             className="site-layout-background"
