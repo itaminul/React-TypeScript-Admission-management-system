@@ -11,18 +11,17 @@ interface BreadcrumbState {
 
 const initialState: BreadcrumbState = {
   breadcrumbs: [],
-}
+};
 
 const breadcrumbsSlice = createSlice({
   name: 'breadcrumbs',
   initialState,
   reducers: {
-    setBreadcrumb(state, action: PayloadAction<Breadcrumb>) {
+    setBreadcrumb(state, action: PayloadAction<any>) {
       state.breadcrumbs.push(action.payload);
     },
    },
-
-  },
+ 
 });
 
 export const { setBreadcrumb } = breadcrumbsSlice.actions;
