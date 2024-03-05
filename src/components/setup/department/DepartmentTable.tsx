@@ -88,7 +88,16 @@ function DepartmentTable() {
   }
   return (
     <>
-      <Table columns={columns} dataSource={data} scroll={{ x: 1500, y: 300 }} />
+      <Table
+        columns={columns}
+        dataSource={data}
+        scroll={{ x: 1500, y: 700 }}
+        pagination={{
+          defaultPageSize: 20,
+          showSizeChanger: true,
+          pageSizeOptions: ["20", "30"],
+        }}
+      />
     </>
   );
 }
