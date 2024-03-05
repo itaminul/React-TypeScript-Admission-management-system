@@ -17,7 +17,11 @@ function Layouts({ children }: LayoutProps) {
       <LeftSideBar />
       <Layout className="site-layout">
         <TopNavigation />
+        <div style={{width: '200px', height:'30px', marginTop: '30px', marginLeft: '-700px', position:'fixed'}}>
+        <span style={{fontWeight: 'bold', fontSize: '22px'}}>
         <Breadcrumbs />
+        </span>
+        </div>
         <Content style={{ margin: "0 0px" }}>
           <div
             className="site-layout-background"
