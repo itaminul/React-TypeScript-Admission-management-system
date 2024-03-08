@@ -14,9 +14,12 @@ function DepartmentTable() {
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedRowId, setSelectedRow] = useState<number | null>(null);
+
 
 const columns: TableColumnProps<DataType> = [
   {
+    id: 1,
     title: "Full Name",
     width: 100,
     dataIndex: "name",
@@ -24,6 +27,7 @@ const columns: TableColumnProps<DataType> = [
     fixed: "left",
   },
   {
+    id: 1,
     title: "Age",
     width: 100,
     dataIndex: "age",
@@ -31,54 +35,68 @@ const columns: TableColumnProps<DataType> = [
     fixed: "left",
   },
   {
+    id: 1,
     title: "Column 1",
     dataIndex: "address",
     key: "1",
     width: 150,
   },
   {
+    id: 1,
     title: "Column 2",
     dataIndex: "address",
     key: "2",
     width: 150,
   },
   {
+    id: 1,
     title: "Column 3",
     dataIndex: "address",
     key: "3",
     width: 150,
   },
   {
+    id: 1,
     title: "Column 4",
     dataIndex: "address",
     key: "4",
     width: 150,
   },
   {
+    id: 1,
     title: "Column 5",
     dataIndex: "address",
     key: "5",
     width: 150,
   },
   {
+    id: 1,
     title: "Column 6",
     dataIndex: "address",
     key: "6",
     width: 150,
   },
   {
+    id: 1,
     title: "Column 7",
     dataIndex: "address",
     key: "7",
     width: 150,
   },
-  { title: "Column 8", dataIndex: "address", key: "8" },
+  { id: 1, title: "Column 8", dataIndex: "address", key: "8" },
   {
+    id: 1,
     title: "Action",
     key: "operation",
     fixed: "right",
     width: 100,
-    render: () => <a>action</a>,
+    render: (params: any) => (
+      <div>
+        <Button onClick={() => handleOpenEditModal(params.id)}>
+          Edit
+        </Button>
+      </div>
+    ),
   },
 ];
 
@@ -92,6 +110,11 @@ const columns: TableColumnProps<DataType> = [
       address: `Dhaka ${i}`
     })
   }
+
+  const handleOpenEditModal = (id: number) => {
+    setIsEditModalOpen(true);
+    setSelectedRow(id);
+  };
 
   const openCreateModal = () => {
       setIsCreateModalOpen(true)
@@ -119,7 +142,7 @@ const editModalClose = () => {
       <Table
         columns={columns}
         dataSource={data}
-        scroll={{ x: 1500, y: 700 }}
+        scroll={{ x: 1500, y: 650 }}
         pagination={{
           defaultPageSize: 20,
           showSizeChanger: true,
@@ -127,8 +150,10 @@ const editModalClose = () => {
         }}
       />
       <EditDepartmentModal
-      open={isEditModalOpen} 
-      onClose={editModalClose} />
+        open={isEditModalOpen}
+        onClose={editModalClose}
+        selectedRowId={selectedRowId}
+      />
     </>
   );
 }
