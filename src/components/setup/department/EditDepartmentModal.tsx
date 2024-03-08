@@ -3,8 +3,9 @@ import { Modal } from "antd";
 interface EditModalProps {
   open: boolean;
   onClose: () => void;
+  selectedRowId: number | null;
 }
-function EditDepartmentModal ({open, onClose}: EditModalProps) {
+function EditDepartmentModal ({open, onClose, selectedRowId}: EditModalProps) {
   return (
     <>
       <Modal
