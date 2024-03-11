@@ -44,20 +44,20 @@ function LeftSideBar() {
           Dashboard
         </div>
         <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
-        <SubMenu key="sub1" icon={<MailOutlined />} title="Setup">
-        <Link  to='/department-setup'>
-        <Menu.Item key="1">Department</Menu.Item>
-        </Link>
-        <Menu.Item key="2">Course Setup</Menu.Item>
-      </SubMenu>
-      <SubMenu key="sub1" icon={<MailOutlined />} title="Student">
-      <Link to="/student-info">
-         <Menu.Item key="2">
-            Student Setup
-          </Menu.Item>
-         </Link>
-      </SubMenu>      
-        
+          <SubMenu key="sub1" icon={<MailOutlined />} title="Setup">
+            <Link to="/department-setup">
+              <Menu.Item key="1">Department</Menu.Item>
+            </Link>
+            <Link to="/designation-setup">
+              <Menu.Item key="2">Designation</Menu.Item>
+            </Link>
+          </SubMenu>
+          <SubMenu key="sub1" icon={<MailOutlined />} title="Student">
+            <Link to="/student-info">
+              <Menu.Item key="2">Student Setup</Menu.Item>
+            </Link>
+          </SubMenu>
+
           <Menu.Item key="3" icon={<VideoCameraOutlined />}>
             Option 2
           </Menu.Item>
