@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import CreatDepartmentModal from "./CreaetDepartmentModal";
 import EditDepartmentModal from "./EditDepartmentModal";
+import { useGetDepartmentDataQuery } from "../../../redux/features/service/departmentApiService";
+
 interface DataType {
   key: React.Key;
   name: string;
@@ -15,7 +17,8 @@ function DepartmentTable() {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedRowId, setSelectedRow] = useState<number | null>(null);
-
+const{ data: departments } = useGetDepartmentDataQuery();
+console.log("dep data", departments);
 
 const columns: TableColumnProps<DataType> = [
   {
