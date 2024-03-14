@@ -1,4 +1,4 @@
-import { Button, Checkbox, Col, Form, Input, Row } from "antd";
+import { Button, Checkbox, Col, Form, Input, Row, message } from "antd";
 import './login.scss'
 import LoginDataType from "./LoginType";
 import { useNavigate} from 'react-router-dom'
@@ -9,7 +9,8 @@ import { RootState } from "../../redux/store";
 
 
 function Login() {
-
+const [loading, setLoading] = useState(false);
+const [token, setToken] = useState<string>("");
 const navigate = useNavigate();
 const [loginError, setLoginError] = useState<boolean>(false);
 const dispatch = useDispatch();
@@ -23,17 +24,35 @@ useEffect(() => {
   }
 }, [dispatch]);
 
-const onFinish = (values: LoginDataType) => {
-  const usernmae = values.username;
-  const password = values.password;
+const onFinish = async(values: LoginDataType) => {
+  setLoading(true);
+  try {
+    const username = values.username;
+    const password = values.password;
+    const response = await fetch(`http://localhost:9007/api/user/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, password }),
+    });
+    const json = await response.json();
+    const accessToken = await json.accessToken;
+    console.log("accessToken accessToken", accessToken);
+    // dispatch(setAccessToken(response.formData.accessToken));
+    void message.success("Login Successfully");
+    setTimeout(() => {
+      setLoading(false);
+   localStorage.setItem("accessToken", accessToken);
+      localStorage.getItem("accessToken");
+      dispatch(login());
+      localStorage.setItem("isAuthenticated", "true");
 
-  if(usernmae === 'admin' && password == '123456'){   
-
-    dispatch(login());
-    localStorage.setItem("isAuthenticated", 'true');
-
-  }else{
-
+    }, 1000);
+  } catch (error) {
+    message.error("Login failed");
+  } finally {
+    setLoading(false);
   }
 
 

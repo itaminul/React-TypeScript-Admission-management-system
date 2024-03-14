@@ -1,6 +1,7 @@
 interface LoginDataType {
-    username: string;
-    password: string;
+  username: string;
+  password: string;
+  accessToken: string;
 }
 
 export default LoginDataType;
