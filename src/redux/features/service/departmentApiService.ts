@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { DepartmentDataType } from "../../../components/setup/department/DepartmentDataType";
-const url = 'http://localhost:9007/'
+const url = 'http://localhost:9007/api/'
 export const departmentApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: url
