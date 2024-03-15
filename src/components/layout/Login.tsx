@@ -4,7 +4,7 @@ import LoginDataType from "./LoginType";
 import { useNavigate} from 'react-router-dom'
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../redux/features/authSlice";
+import { login, setAccessToken } from "../../redux/features/authSlice";
 import { RootState } from "../../redux/store";
 
 
@@ -12,6 +12,7 @@ function Login() {
 const [loading, setLoading] = useState(false);
 const [token, setToken] = useState<string>("");
 const navigate = useNavigate();
+
 const [loginError, setLoginError] = useState<boolean>(false);
 const dispatch = useDispatch();
 const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticate);
@@ -38,17 +39,16 @@ const onFinish = async(values: LoginDataType) => {
     });
     const json = await response.json();
     const accessToken = await json.accessToken;
-    console.log("accessToken accessToken", accessToken);
     // dispatch(setAccessToken(response.formData.accessToken));
     void message.success("Login Successfully");
+    console.log("toke ftr login ", accessToken);
     setTimeout(() => {
-      setLoading(false);
-   localStorage.setItem("accessToken", accessToken);
-      localStorage.getItem("accessToken");
+      const accessTokena = accessToken;
+      dispatch(setAccessToken(accessTokena));
       dispatch(login());
-      localStorage.setItem("isAuthenticated", "true");
-
-    }, 1000);
+      setLoading(false);
+        }, 1000);
+  
   } catch (error) {
     message.error("Login failed");
   } finally {
@@ -65,6 +65,7 @@ if(isAuthenticated) {
 const onFinishFailed = (errorInfo: any) => {
   console.log("Failed:", errorInfo);
 };
+
 
 
   return(
