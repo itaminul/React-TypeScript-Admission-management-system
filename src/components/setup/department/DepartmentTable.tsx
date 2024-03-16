@@ -16,76 +16,24 @@ function DepartmentTable() {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedRowId, setSelectedRow] = useState<number | null>(null);
-const{ data: departments } = useGetDepartmentDataQuery();
-console.log("department table data", departments);
-
+const{ data = [] } = useGetDepartmentDataQuery();
 const columns: TableColumnProps<DataType> = [
   {
     id: 1,
-    title: "Full Name",
+    departmentName: "Department Name",
     width: 100,
-    dataIndex: "name",
-    key: "name",
+    dataIndex: "departmentName",
+    key: "departmentName",
     fixed: "left",
   },
   {
     id: 1,
-    title: "Age",
+    departmentDes: "Department Des",
     width: 100,
-    dataIndex: "age",
-    key: "age",
+    dataIndex: "departmentDes",
+    key: "departmentDes",
     fixed: "left",
   },
-  {
-    id: 1,
-    title: "Column 1",
-    dataIndex: "address",
-    key: "1",
-    width: 150,
-  },
-  {
-    id: 1,
-    title: "Column 2",
-    dataIndex: "address",
-    key: "2",
-    width: 150,
-  },
-  {
-    id: 1,
-    title: "Column 3",
-    dataIndex: "address",
-    key: "3",
-    width: 150,
-  },
-  {
-    id: 1,
-    title: "Column 4",
-    dataIndex: "address",
-    key: "4",
-    width: 150,
-  },
-  {
-    id: 1,
-    title: "Column 5",
-    dataIndex: "address",
-    key: "5",
-    width: 150,
-  },
-  {
-    id: 1,
-    title: "Column 6",
-    dataIndex: "address",
-    key: "6",
-    width: 150,
-  },
-  {
-    id: 1,
-    title: "Column 7",
-    dataIndex: "address",
-    key: "7",
-    width: 150,
-  },
-  { id: 1, title: "Column 8", dataIndex: "address", key: "8" },
   {
     id: 1,
     title: "Action",
@@ -103,15 +51,6 @@ const columns: TableColumnProps<DataType> = [
 ];
 
 
-  const data: DataType[] = [];
-  for(let i=0; i < 100; i++) {
-    data.push({
-      key: i,
-      name: `Aminul ${i}`,
-      age: 32,
-      address: `Dhaka ${i}`
-    })
-  }
 
   const handleOpenEditModal = (id: number) => {
     setIsEditModalOpen(true);

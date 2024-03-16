@@ -18,12 +18,16 @@ const dispatch = useDispatch();
 const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticate);
 const isLoggedIn = true;
 
+
 useEffect(() => {
-  const isAuthenticatedInStorage = sessionStorage.getItem('isAuthenticated');
-  if(isAuthenticatedInStorage === 'true') {
-    dispatch(login());
+  const accessTokenaUse = localStorage.getItem('accessToken');
+  if (accessTokenaUse) {
+    dispatch(setAccessToken(accessTokenaUse));
   }
 }, [dispatch]);
+
+
+
 
 const onFinish = async(values: LoginDataType) => {
   setLoading(true);
@@ -41,8 +45,8 @@ const onFinish = async(values: LoginDataType) => {
     const accessToken = await json.accessToken;
     void message.success("Login Successfully");
     setTimeout(() => {
-      const accessTokena = accessToken;
-      dispatch(setAccessToken(accessTokena));
+      const accessTokenPass = accessToken;
+      dispatch(setAccessToken(accessTokenPass));
       dispatch(login());
       setLoading(false);
         }, 1000);
