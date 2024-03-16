@@ -1,19 +1,25 @@
 import { Avatar, Dropdown, Layout, Menu } from "antd";
 import {
-   MenuUnfoldOutlined,
-  MenuFoldOutlined,
   UserOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
 import { useState } from "react";
-import React from "react";
+import { clearAccessToken } from "../../redux/features/authSlice";
+import { useDispatch, useSelector } from "react-redux";
 const { Header } = Layout;
+
+
 function TopNavigation() {
+  const dispatch = useDispatch();
   const [collapsed, setCollapsed] = useState(false);
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
   }
+
+
 const handleLogout= () => {
+  const accessToken = localStorage.getItem('accessToken');
+  dispatch(clearAccessToken())
 
 }
    const menu = (

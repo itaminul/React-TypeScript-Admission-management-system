@@ -1,12 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { DepartmentDataType } from "../../../components/setup/department/DepartmentDataType";
-const url = 'http://localhost:9007/api/'
-const accessToken = localStorage.getItem('acessToken');
-console.log('service accessToken check', accessToken);
+const url = 'http://localhost:9007/api/';
+const accessTokena = localStorage.getItem('accessToken');
 export const departmentApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:9007/api/",
     prepareHeaders: (headers) => {
+    const accessToken = localStorage.getItem('accessToken');
       if (accessToken != null) {
         headers.set("Authorization", `Bearer ${accessToken}`);
       }
