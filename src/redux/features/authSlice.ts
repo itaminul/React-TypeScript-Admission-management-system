@@ -21,10 +21,12 @@ const authSlice = createSlice({
     setAccessToken(state, action: PayloadAction<string>) {
       state.accessToken = action.payload;
       localStorage.setItem("accessToken", action.payload);
+      state.isAuthenticate = true;
     },
     clearAccessToken(state) {
       state.accessToken = null;
       localStorage.removeItem("accessToken");
+      state.isAuthenticate = false;
     },
   },
 });

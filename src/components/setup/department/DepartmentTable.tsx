@@ -1,6 +1,5 @@
-import { Button, Input, Table, TableColumnProps } from "antd";
+import { Button, Table, TableColumnProps } from "antd";
 import React, { useState } from "react";
-import { SearchOutlined } from "@ant-design/icons";
 import CreatDepartmentModal from "./CreaetDepartmentModal";
 import EditDepartmentModal from "./EditDepartmentModal";
 import { useGetDepartmentDataQuery } from "../../../redux/features/service/departmentApiService";
@@ -18,7 +17,7 @@ function DepartmentTable() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedRowId, setSelectedRow] = useState<number | null>(null);
 const{ data: departments } = useGetDepartmentDataQuery();
-console.log("dep data", departments);
+console.log("department table data", departments);
 
 const columns: TableColumnProps<DataType> = [
   {

@@ -39,9 +39,7 @@ const onFinish = async(values: LoginDataType) => {
     });
     const json = await response.json();
     const accessToken = await json.accessToken;
-    // dispatch(setAccessToken(response.formData.accessToken));
     void message.success("Login Successfully");
-    console.log("toke ftr login ", accessToken);
     setTimeout(() => {
       const accessTokena = accessToken;
       dispatch(setAccessToken(accessTokena));
