@@ -1,17 +1,8 @@
-import { ColumnType } from "antd/es/table";
-import { Button, Table, TableColumnProps } from "antd";
-import React, { useState } from "react";
+import { Button, Table } from "antd";
+import  { useState } from "react";
 import CreatDepartmentModal from "./CreaetDepartmentModal";
 import EditDepartmentModal from "./EditDepartmentModal";
 import { useGetDepartmentDataQuery } from "../../../redux/features/service/departmentApiService";
-
-import { DepartmentDataType } from "./DepartmentDataType";
-
-interface DataType {
-  key: React.Key;
-  departmentName: string;
-  departmentDes: number;
-}
 function DepartmentTable() {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
