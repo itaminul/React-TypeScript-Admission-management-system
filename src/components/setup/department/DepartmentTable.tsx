@@ -1,56 +1,64 @@
+import { ColumnType } from "antd/es/table";
 import { Button, Table, TableColumnProps } from "antd";
 import React, { useState } from "react";
 import CreatDepartmentModal from "./CreaetDepartmentModal";
 import EditDepartmentModal from "./EditDepartmentModal";
 import { useGetDepartmentDataQuery } from "../../../redux/features/service/departmentApiService";
 
+import { DepartmentDataType } from "./DepartmentDataType";
+
 interface DataType {
   key: React.Key;
-  name: string;
-  age: number;
-  address: string;
-  
+  departmentName: string;
+  departmentDes: number;
 }
 function DepartmentTable() {
-
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedRowId, setSelectedRow] = useState<number | null>(null);
-const{ data = [] } = useGetDepartmentDataQuery();
-const columns: TableColumnProps<DataType> = [
-  {
-    id: 1,
-    departmentName: "Department Name",
-    width: 100,
-    dataIndex: "departmentName",
-    key: "departmentName",
-    fixed: "left",
-  },
-  {
-    id: 1,
-    departmentDes: "Department Des",
-    width: 100,
-    dataIndex: "departmentDes",
-    key: "departmentDes",
-    fixed: "left",
-  },
-  {
-    id: 1,
-    title: "Action",
-    key: "operation",
-    fixed: "right",
-    width: 100,
-    render: (params: any) => (
-      <div>
-        <Button onClick={() => handleOpenEditModal(params.id)}>
-          Edit
-        </Button>
-      </div>
-    ),
-  },
-];
+   const { data: department, error, isLoading } = useGetDepartmentDataQuery();
 
 
+   if (isLoading) return <div>Loading...</div>;
+
+   if (error || !department) {
+     return <div>Error: Failed to fetch department data.</div>;
+   }
+
+  const columns = [
+    {
+      title: "Serial No",
+      width: 30,
+      dataIndex: "serial",
+      key: "serial",
+      render: (_: any, record: any, index: number) => index + 1
+    },
+    {
+      title: "Department Name",
+      width: 100,
+      dataIndex: "departmentName",
+      key: "departmentName",
+      fixed: "left",
+    },
+    {
+      title: "Department Des",
+      width: 100,
+      dataIndex: "departmentDes",
+      key: "departmentDes",
+      fixed: "left",
+    },
+    {
+      title: "Action",
+      key: "operation",
+      fixed: "right",
+      width: 100,
+      render: (params: any) => (
+        <div>
+          <Button onClick={() => handleOpenEditModal(params.id)}>Edit</Button>
+        </div>
+      ),
+    },
+  ];
 
   const handleOpenEditModal = (id: number) => {
     setIsEditModalOpen(true);
@@ -58,15 +66,18 @@ const columns: TableColumnProps<DataType> = [
   };
 
   const openCreateModal = () => {
-      setIsCreateModalOpen(true)
-  }
-const handleCreateModalClose = () => {
-  setIsCreateModalOpen(false);
-}
+    setIsCreateModalOpen(true);
+  };
+  const handleCreateModalClose = () => {
+    setIsCreateModalOpen(false);
+  };
 
-const editModalClose = () => {
-  setIsEditModalOpen(false);
-}
+  const editModalClose = () => {
+    setIsEditModalOpen(false);
+  };
+  if (!Array.isArray(department) || department.length === 0) {
+    return <div>Data is not in the expected format</div>;
+  }
   return (
     <>
       <Button
@@ -81,8 +92,8 @@ const editModalClose = () => {
         onClose={handleCreateModalClose}
       />
       <Table
+        dataSource={department}
         columns={columns}
-        dataSource={data}
         scroll={{ x: 1500, y: 650 }}
         pagination={{
           defaultPageSize: 20,

@@ -1,4 +1,5 @@
 export interface DepartmentDataType {
-departmentName?: string;
-orgId?: number;
+  id?: number;
+  departmentName?: string;
+  departmentDes?: string;
 }
