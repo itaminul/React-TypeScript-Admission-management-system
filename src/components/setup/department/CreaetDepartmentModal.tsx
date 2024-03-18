@@ -1,6 +1,5 @@
-import { Button, Form, Input, Modal, Select, message } from "antd";
+import { Button, Form, Input, Modal, Select } from "antd";
 import { DepartmentDataType } from "./DepartmentDataType";
-import { useCreateDepartmentSetupMutation } from "../../../redux/features/service/departmentApiService";
 const { Option } = Select;
 interface CreateModalProps {
   open: boolean;
@@ -8,28 +7,9 @@ interface CreateModalProps {
 }
 
 function CreatDepartmentModal({ open, onClose }: CreateModalProps) {
-const [ createDepartment ]  = useCreateDepartmentSetupMutation();
-  const [form] = Form.useForm();
-  const onFinish = async(value: DepartmentDataType) => {
-    try {
-      const departmentFormat = {
-        departmentName: value.departmentName,
-        departmentDes: value.departmentName,
-        orgId: Number(value.orgId)
-      }
-      console.log("department value", departmentFormat);
-      const response = await createDepartment(departmentFormat);
-      if(response != null) {
-        setTimeout(() =>{
-          void message.success('Created successfully');
-          onClose();
-          window.location.reload();
-        }, 200)
-      }
-      form.resetFields();
-    } catch (error) {
-      console.error("Error create data", error);
-    }
+
+  const onFinish = (value: DepartmentDataType) => {
+    console.log("department value", value);
   }
   return (
     <>
@@ -39,24 +19,19 @@ const [ createDepartment ]  = useCreateDepartmentSetupMutation();
         footer={[
           <>
             <Button onClick={onClose}>Cancel</Button>
+            <Button key="submit"  type="primary" htmlType="submit">
+              Submit
+            </Button>
           </>,
         ]}
       >
-        <Form layout="vertical" onFinish={onFinish} form={form}>
+        <Form layout="vertical" onFinish={onFinish}>
           <Form.Item
             label="Name"
             name="departmentName"
-            rules={[{ required: true,  message: "Please enter department name!"  }]}
+            rules={[{ required: true }]}
           >
             <Input placeholder="Department Name" />
-          </Form.Item>
-
-          <Form.Item
-            label="Department Description"
-            name="departmentDes"
-            rules={[{ required: false }]}
-          >
-            <Input placeholder="Department Descriptoin" />
           </Form.Item>
 
           <Form.Item
@@ -68,16 +43,6 @@ const [ createDepartment ]  = useCreateDepartmentSetupMutation();
               <Option value="1">Abc</Option>
               <Option value="2">Def</Option>
             </Select>
-          </Form.Item>
-           <Form.Item>
-            <Button
-              style={{ float: 'left' }}
-              key="submit"
-              type="primary"
-              htmlType="submit"
-            >
-              Submit
-            </Button>
           </Form.Item>
         </Form>
       </Modal>
