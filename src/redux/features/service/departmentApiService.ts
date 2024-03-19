@@ -25,7 +25,7 @@ export const departmentApi = createApi({
       },
     }),
     getDepartmentById: builder.query<DepartmentDataType[], number>({
-      query: (id) => `department/byId${id}`,
+      query: (id) => `department/byId/${id}`,
       transformResponse: (response: any) => {
         return response.results;
       }
