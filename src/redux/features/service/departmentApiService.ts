@@ -40,7 +40,14 @@ export const departmentApi = createApi({
         body: createDepartment,
       }),
     }),
+    updateDepartment: builder.mutation<void, {id: number; formData: DepartmentDataType}>({
+      query: (data) => ({
+        url: `/department/${data.id}`,
+        method: 'PATCH',
+        body: data
+      })
+    })
   }),
 });
 
-export const { useCreateDepartmentSetupMutation, useGetDepartmentDataQuery } = departmentApi;
+export const { useCreateDepartmentSetupMutation, useGetDepartmentDataQuery, useGetDepartmentByIdQuery, useUpdateDepartmentMutation } = departmentApi;
