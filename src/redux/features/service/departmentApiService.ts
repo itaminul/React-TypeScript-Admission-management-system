@@ -24,6 +24,12 @@ export const departmentApi = createApi({
         return formateddata;
       },
     }),
+    getDepartmentById: builder.query<DepartmentDataType[], number>({
+      query: (id) => `department/byId${id}`,
+      transformResponse: (response: any) => {
+        return response.results;
+      }
+    }),
     createDepartmentSetup: builder.mutation<
       DepartmentDataType,
       Partial<DepartmentDataType>
