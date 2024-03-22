@@ -5,7 +5,7 @@ export const WEB_BASE_URL = import.meta.env.VITE_WEB_BASE_URL ?? "http://localho
   const endpoints = {
     login: '/user/login',
     departmentInfo: '/department',
-    organization: '/organization'
+    organizationInfo: '/organization'
 
   }
   memoizedCheckUniqueValues(endpoints);
