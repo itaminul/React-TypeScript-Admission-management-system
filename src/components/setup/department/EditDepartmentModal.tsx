@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal, Select } from "antd";
+import { Button, Form, Input, Modal, Select, message } from "antd";
 import { useEffect } from "react";
 import { useGetDepartmentByIdQuery, useUpdateDepartmentMutation } from "../../../redux/features/service/departmentApiService";
 import { useGetOrganizationDataQuery } from "../../../redux/features/service/organizationApiService";
@@ -18,20 +18,29 @@ function EditDepartmentModal({ open, onClose, selectedRowId }: EditDepartmentPro
     }
   }, [departmentInfoById, form]);
 
-  const onFinish = async(value: DepartmentDataType) => {
-    try {
-       const departmentFormat = {
-         departmentName: value.departmentName,
-         departmentDes: value.departmentName,
-         orgId: Number(value.orgId),
-       }
-      // const response = await updateDepartment(departmentFormat);
-    } catch (error) {
-      
-    }
-    console.log("Received values:", value);
-    // Handle form submission
-  };
+ const onFinish = async (value: DepartmentDataType) => {
+   try {
+     const departmentFormat = {
+       id: selectedRowId,
+       departmentName: value.departmentName,
+       departmentDes: value.departmentDes,
+       serialNo: value.serialNo,
+       orgId: Number(value.orgId),
+     };
+     const response = await updateDepartment(departmentFormat);
+     if (response != null) {
+       setTimeout(() => {
+         void message.success("Updated successfully");
+         onClose();
+         window.location.reload();
+       }, 200);
+     }
+     form.resetFields();
+   } catch (error) {
+     console.error("Error create data", error);
+   }
+ };
+
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -44,7 +53,7 @@ function EditDepartmentModal({ open, onClose, selectedRowId }: EditDepartmentPro
   console.log("organizations", organizations);
   return (
     <Modal
-    title="Update department"
+      title="Update department"
       open={open}
       onCancel={onClose}
       footer={[
@@ -76,6 +85,13 @@ function EditDepartmentModal({ open, onClose, selectedRowId }: EditDepartmentPro
           rules={[{ required: false }]}
         >
           <Input placeholder="Department Description" />
+        </Form.Item>
+        <Form.Item
+          label="Serial No"
+          name="serialNo"
+          rules={[{ required: false }]}
+        >
+          <Input placeholder="Serial No" />
         </Form.Item>
 
         <Form.Item
