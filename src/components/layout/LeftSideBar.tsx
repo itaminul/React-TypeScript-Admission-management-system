@@ -4,9 +4,8 @@ import {
   UploadOutlined,
   UserOutlined,
   VideoCameraOutlined,
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-  MailOutlined
+ ContactsFilled,
+  SettingFilled,
 } from "@ant-design/icons";
 import { useState } from "react";
 import SubMenu from "antd/es/menu/SubMenu";
@@ -44,7 +43,7 @@ function LeftSideBar() {
           Dashboard
         </div>
         <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
-          <SubMenu key="sub1" icon={<MailOutlined />} title="Setup">
+          <SubMenu key="sub1" icon={<SettingFilled />} title="Setup">
             <Link to="/department-setup">
               <Menu.Item key="1">Department</Menu.Item>
             </Link>
@@ -52,7 +51,7 @@ function LeftSideBar() {
               <Menu.Item key="2">Designation</Menu.Item>
             </Link>
           </SubMenu>
-          <SubMenu key="sub1" icon={<MailOutlined />} title="Student">
+          <SubMenu key="sub1" icon={<ContactsFilled />} title="Student">
             <Link to="/student-info">
               <Menu.Item key="2">Student Setup</Menu.Item>
             </Link>
