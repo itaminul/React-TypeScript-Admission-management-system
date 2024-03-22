@@ -1,22 +1,29 @@
 import { Button, Form, Input, Modal, Select, message } from "antd";
 import { useEffect } from "react";
-import { useGetDepartmentByIdQuery, useUpdateDepartmentMutation } from "../../../redux/features/service/departmentApiService";
+import {
+  useGetDepartmentByIdQuery,
+  useUpdateDepartmentMutation,
+} from "../../../redux/features/service/departmentApiService";
 import { useGetOrganizationDataQuery } from "../../../redux/features/service/organizationApiService";
 import { DepartmentDataType, EditDepartmentProps } from "./DepartmentDataType";
 const { Option } = Select;
 
-
-function EditDepartmentModal({ open, onClose, selectedRowId }: EditDepartmentProps ) {
+function EditDepartmentModal({
+  open,
+  onClose,
+  selectedRowId,
+}: EditDepartmentProps) {
   const [form] = Form.useForm();
-  const { data: organizations} = useGetOrganizationDataQuery();
+  const { data: organizations } = useGetOrganizationDataQuery();
   const { data: departmentInfoById, isLoading } =
     useGetDepartmentByIdQuery(selectedRowId);
-   const [ updateDepartment ] =  useUpdateDepartmentMutation();
+  const [updateDepartment] = useUpdateDepartmentMutation();
   useEffect(() => {
     if (departmentInfoById) {
       form.setFieldsValue(departmentInfoById);
     }
   }, [departmentInfoById, form]);
+
 
  const onFinish = async (value: DepartmentDataType) => {
    try {

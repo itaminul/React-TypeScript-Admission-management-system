@@ -1,4 +1,4 @@
-import { API_BASE_URL } from '../../../endpoints'
+import { API_BASE_URL } from "../../../endpoints";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { DepartmentDataType } from "../../../components/setup/department/DepartmentDataType";
 export const departmentApi = createApi({
@@ -21,6 +21,7 @@ export const departmentApi = createApi({
           id: item.id,
           departmentName: item.departmentName,
           departmentDes: item.departmentDes,
+          serialNo: item.serialNo,
         }));
         return formateddata;
       },
@@ -54,4 +55,9 @@ export const departmentApi = createApi({
   }),
 });
 
-export const { useCreateDepartmentSetupMutation, useGetDepartmentDataQuery, useGetDepartmentByIdQuery, useUpdateDepartmentMutation } = departmentApi;
+export const {
+  useCreateDepartmentSetupMutation,
+  useGetDepartmentDataQuery,
+  useGetDepartmentByIdQuery,
+  useUpdateDepartmentMutation,
+} = departmentApi;
