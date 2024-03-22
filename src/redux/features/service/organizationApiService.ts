@@ -3,15 +3,16 @@ import { API_BASE_URL } from "../../../endpoints";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const organizationApi = createApi({
+  reducerPath: "organizationApi",
   baseQuery: fetchBaseQuery({
     baseUrl: API_BASE_URL,
     prepareHeaders: (headers) => {
-            const accessToken = localStorage.getItem("accessToken");
-            if (accessToken != null) {
-              headers.set("Authorization", `Bearer ${accessToken}`);
-            }
-            return headers;
-    }
+      const accessToken = localStorage.getItem("accessToken");
+      if (accessToken != null) {
+        headers.set("Authorization", `Bearer ${accessToken}`);
+      }
+      return headers;
+    },
   }),
   endpoints: (builder) => ({
     getOrganizationData: builder.query<OrganizationDataType[], void>({
@@ -19,11 +20,11 @@ export const organizationApi = createApi({
       transformResponse: (response: any) => {
         const formateddata = response.results?.map((item: any) => ({
           id: item.id,
-          organizationName: item.organizationName,
-          organizationDes: item.organizationDes,
+          orgName: item.orgName,
+          orgDescription: item.orgDescription,
         }));
         return formateddata;
-      }
+      },
     }),
   }),
 });

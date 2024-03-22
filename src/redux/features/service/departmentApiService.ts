@@ -2,6 +2,7 @@ import { API_BASE_URL } from '../../../endpoints'
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { DepartmentDataType } from "../../../components/setup/department/DepartmentDataType";
 export const departmentApi = createApi({
+  reducerPath: "departmentApi",
   baseQuery: fetchBaseQuery({
     baseUrl: API_BASE_URL,
     prepareHeaders: (headers) => {
