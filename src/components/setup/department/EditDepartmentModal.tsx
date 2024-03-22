@@ -1,62 +1,46 @@
-
-import { Form, Input, Modal, Select } from "antd";
-const { Option } = Select;
-import { Button, Form, Input, Modal, Select } from "antd";
+import { Button, Form, Input, Modal, Select, message } from "antd";
 import { useEffect } from "react";
-import { useGetDepartmentByIdQuery } from "../../../redux/features/service/departmentApiService";
+import { useGetDepartmentByIdQuery, useUpdateDepartmentMutation } from "../../../redux/features/service/departmentApiService";
 import { useGetOrganizationDataQuery } from "../../../redux/features/service/organizationApiService";
+import { DepartmentDataType, EditDepartmentProps } from "./DepartmentDataType";
 const { Option } = Select;
-interface EditModalProps {
-  open: boolean;
-  onClose: () => void;
-  selectedRowId: number;
-}
-function EditDepartmentModal ({open, onClose, selectedRowId}: EditModalProps) {
-  const onFinish = () => {
-    
-  }
-  return (
-    <>
-      <Modal open={open} onCancel={onClose}>
-        <Form layout="vertical" onFinish={onFinish}>
-          <Form.Item
-            label="Name"
-            name="departmentName"
-            rules={[{ required: true }]}
-          >
-            <Input placeholder="Department Name" />
-          </Form.Item>
 
-          <Form.Item
-            name="orgId"
-            label="Organization"
-            rules={[{ required: true, message: "Please select gender!" }]}
-          >
-            <Select placeholder="select your gender">
-              <Option value="1">Abc</Option>
-              <Option value="2">Def</Option>
-            </Select>
-          </Form.Item>
-        </Form>
-      </Modal>
-    </>
-=======
 
-function EditDepartmentModal({ open, onClose, selectedRowId }: EditModalProps) {
+function EditDepartmentModal({ open, onClose, selectedRowId }: EditDepartmentProps ) {
   const [form] = Form.useForm();
   const { data: organizations} = useGetOrganizationDataQuery();
   const { data: departmentInfoById, isLoading } =
     useGetDepartmentByIdQuery(selectedRowId);
+   const [ updateDepartment ] =  useUpdateDepartmentMutation();
   useEffect(() => {
     if (departmentInfoById) {
       form.setFieldsValue(departmentInfoById);
     }
   }, [departmentInfoById, form]);
 
-  const onFinish = (values: any) => {
-    console.log("Received values:", values);
-    // Handle form submission
-  };
+ const onFinish = async (value: DepartmentDataType) => {
+   try {
+     const departmentFormat = {
+       id: selectedRowId,
+       departmentName: value.departmentName,
+       departmentDes: value.departmentDes,
+       serialNo: value.serialNo,
+       orgId: Number(value.orgId),
+     };
+     const response = await updateDepartment(departmentFormat);
+     if (response != null) {
+       setTimeout(() => {
+         void message.success("Updated successfully");
+         onClose();
+         window.location.reload();
+       }, 200);
+     }
+     form.resetFields();
+   } catch (error) {
+     console.error("Error create data", error);
+   }
+ };
+
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -69,11 +53,20 @@ function EditDepartmentModal({ open, onClose, selectedRowId }: EditModalProps) {
   console.log("organizations", organizations);
   return (
     <Modal
+      title="Update department"
       open={open}
       onCancel={onClose}
       footer={[
         <Button key="cancel" onClick={onClose}>
           Cancel
+        </Button>,
+        <Button
+          key="submit"
+          type="primary"
+          htmlType="submit"
+          onClick={form.submit}
+        >
+          Submit
         </Button>,
       ]}
     >
@@ -93,6 +86,13 @@ function EditDepartmentModal({ open, onClose, selectedRowId }: EditModalProps) {
         >
           <Input placeholder="Department Description" />
         </Form.Item>
+        <Form.Item
+          label="Serial No"
+          name="serialNo"
+          rules={[{ required: false }]}
+        >
+          <Input placeholder="Serial No" />
+        </Form.Item>
 
         <Form.Item
           name="orgId"
@@ -106,12 +106,6 @@ function EditDepartmentModal({ open, onClose, selectedRowId }: EditModalProps) {
               </Option>
             ))}
           </Select>
-        </Form.Item>
-
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
         </Form.Item>
       </Form>
     </Modal>
