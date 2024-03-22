@@ -1,28 +1,35 @@
 import { Button, Form, Input, Modal, Select } from "antd";
 import { useEffect } from "react";
-import { useGetDepartmentByIdQuery } from "../../../redux/features/service/departmentApiService";
+import { useGetDepartmentByIdQuery, useUpdateDepartmentMutation } from "../../../redux/features/service/departmentApiService";
 import { useGetOrganizationDataQuery } from "../../../redux/features/service/organizationApiService";
+import { DepartmentDataType, EditDepartmentProps } from "./DepartmentDataType";
 const { Option } = Select;
 
-interface EditModalProps {
-  open: boolean;
-  onClose: () => void;
-  selectedRowId: number;
-}
 
-function EditDepartmentModal({ open, onClose, selectedRowId }: EditModalProps) {
+function EditDepartmentModal({ open, onClose, selectedRowId }: EditDepartmentProps ) {
   const [form] = Form.useForm();
   const { data: organizations} = useGetOrganizationDataQuery();
   const { data: departmentInfoById, isLoading } =
     useGetDepartmentByIdQuery(selectedRowId);
+   const [ updateDepartment ] =  useUpdateDepartmentMutation();
   useEffect(() => {
     if (departmentInfoById) {
       form.setFieldsValue(departmentInfoById);
     }
   }, [departmentInfoById, form]);
 
-  const onFinish = (values: any) => {
-    console.log("Received values:", values);
+  const onFinish = async(value: DepartmentDataType) => {
+    try {
+       const departmentFormat = {
+         departmentName: value.departmentName,
+         departmentDes: value.departmentName,
+         orgId: Number(value.orgId),
+       }
+      // const response = await updateDepartment(departmentFormat);
+    } catch (error) {
+      
+    }
+    console.log("Received values:", value);
     // Handle form submission
   };
 
@@ -37,11 +44,20 @@ function EditDepartmentModal({ open, onClose, selectedRowId }: EditModalProps) {
   console.log("organizations", organizations);
   return (
     <Modal
+    title="Update department"
       open={open}
       onCancel={onClose}
       footer={[
         <Button key="cancel" onClick={onClose}>
           Cancel
+        </Button>,
+        <Button
+          key="submit"
+          type="primary"
+          htmlType="submit"
+          onClick={form.submit}
+        >
+          Submit
         </Button>,
       ]}
     >
@@ -74,12 +90,6 @@ function EditDepartmentModal({ open, onClose, selectedRowId }: EditModalProps) {
               </Option>
             ))}
           </Select>
-        </Form.Item>
-
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
         </Form.Item>
       </Form>
     </Modal>

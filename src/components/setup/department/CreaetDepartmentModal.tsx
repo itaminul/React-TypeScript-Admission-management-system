@@ -1,23 +1,19 @@
 import { Button, Form, Input, Modal, Select, message } from "antd";
-import { DepartmentDataType } from "./DepartmentDataType";
+import { DepartmentDataType, CreateDepartmentModalProps } from "./DepartmentDataType";
 import { useCreateDepartmentSetupMutation } from "../../../redux/features/service/departmentApiService";
+import { useGetOrganizationDataQuery } from "../../../redux/features/service/organizationApiService";
 const { Option } = Select;
-interface CreateModalProps {
-  open: boolean;
-  onClose: () => void;
-}
-
-function CreatDepartmentModal({ open, onClose }: CreateModalProps) {
-const [ createDepartment ]  = useCreateDepartmentSetupMutation();
-  const [form] = Form.useForm();
-  const onFinish = async(value: DepartmentDataType) => {
+function CreatDepartmentModal({  open, onClose }: CreateDepartmentModalProps) {
+    const { data: organizations } = useGetOrganizationDataQuery();
+    const [ createDepartment ]  = useCreateDepartmentSetupMutation();
+    const [form] = Form.useForm();
+    const onFinish = async(value: DepartmentDataType) => {
     try {
       const departmentFormat = {
         departmentName: value.departmentName,
         departmentDes: value.departmentName,
         orgId: Number(value.orgId)
       }
-      console.log("department value", departmentFormat);
       const response = await createDepartment(departmentFormat);
       if(response != null) {
         setTimeout(() =>{
@@ -34,11 +30,20 @@ const [ createDepartment ]  = useCreateDepartmentSetupMutation();
   return (
     <>
       <Modal
+        title="Create Department"
         open={open}
         onCancel={onClose}
         footer={[
           <>
-            <Button onClick={onClose}>Cancel</Button>
+            <Button onClick={onClose}>Cancel</Button>,
+            <Button
+              key="submit"
+              type="primary"
+              htmlType="submit"
+              onClick={form.submit}
+            >
+              Submit
+            </Button>
           </>,
         ]}
       >
@@ -46,7 +51,9 @@ const [ createDepartment ]  = useCreateDepartmentSetupMutation();
           <Form.Item
             label="Name"
             name="departmentName"
-            rules={[{ required: true,  message: "Please enter department name!"  }]}
+            rules={[
+              { required: true, message: "Please enter department name!" },
+            ]}
           >
             <Input placeholder="Department Name" />
           </Form.Item>
@@ -64,20 +71,13 @@ const [ createDepartment ]  = useCreateDepartmentSetupMutation();
             label="Organization"
             rules={[{ required: true, message: "Please select gender!" }]}
           >
-            <Select placeholder="select your gender">
-              <Option value="1">Abc</Option>
-              <Option value="2">Def</Option>
+            <Select placeholder="Select organization">
+              {organizations?.map((org) => (
+                <Option key={org.id} value={org.id}>
+                  {org.orgName}
+                </Option>
+              ))}
             </Select>
-          </Form.Item>
-           <Form.Item>
-            <Button
-              style={{ float: 'left' }}
-              key="submit"
-              type="primary"
-              htmlType="submit"
-            >
-              Submit
-            </Button>
           </Form.Item>
         </Form>
       </Modal>
