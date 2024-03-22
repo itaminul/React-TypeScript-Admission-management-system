@@ -24,28 +24,30 @@ function EditDepartmentModal({
     }
   }, [departmentInfoById, form]);
 
-  const onFinish = async (value: DepartmentDataType) => {
-    try {
-      const departmentFormat = {
-        id: selectedRowId,
-        departmentName: value.departmentName,
-        departmentDes: value.departmentDes,
-        serialNo: value.serialNo,
-        orgId: Number(value.orgId),
-      };
-      const response = await updateDepartment(departmentFormat);
-      if (response != null) {
-        setTimeout(() => {
-          void message.success("Updated successfully");
-          onClose();
-          window.location.reload();
-        }, 200);
-      }
-      form.resetFields();
-    } catch (error) {
-      console.error("Error create data", error);
-    }
-  };
+
+ const onFinish = async (value: DepartmentDataType) => {
+   try {
+     const departmentFormat = {
+       id: selectedRowId,
+       departmentName: value.departmentName,
+       departmentDes: value.departmentDes,
+       serialNo: value.serialNo,
+       orgId: Number(value.orgId),
+     };
+     const response = await updateDepartment(departmentFormat);
+     if (response != null) {
+       setTimeout(() => {
+         void message.success("Updated successfully");
+         onClose();
+         window.location.reload();
+       }, 200);
+     }
+     form.resetFields();
+   } catch (error) {
+     console.error("Error create data", error);
+   }
+ };
+
 
   if (isLoading) {
     return <div>Loading...</div>;
