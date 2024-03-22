@@ -1,32 +1,35 @@
 import { Button, Form, Input, Modal, Select, message } from "antd";
-import { DepartmentDataType, CreateDepartmentModalProps } from "./DepartmentDataType";
+import {
+  DepartmentDataType,
+  CreateDepartmentModalProps,
+} from "./DepartmentDataType";
 import { useCreateDepartmentSetupMutation } from "../../../redux/features/service/departmentApiService";
 import { useGetOrganizationDataQuery } from "../../../redux/features/service/organizationApiService";
 const { Option } = Select;
-function CreatDepartmentModal({  open, onClose }: CreateDepartmentModalProps) {
-    const { data: organizations } = useGetOrganizationDataQuery();
-    const [ createDepartment ]  = useCreateDepartmentSetupMutation();
-    const [form] = Form.useForm();
-    const onFinish = async(value: DepartmentDataType) => {
+function CreatDepartmentModal({ open, onClose }: CreateDepartmentModalProps) {
+  const { data: organizations } = useGetOrganizationDataQuery();
+  const [createDepartment] = useCreateDepartmentSetupMutation();
+  const [form] = Form.useForm();
+  const onFinish = async (value: DepartmentDataType) => {
     try {
       const departmentFormat = {
         departmentName: value.departmentName,
         departmentDes: value.departmentName,
-        orgId: Number(value.orgId)
-      }
+        orgId: Number(value.orgId),
+      };
       const response = await createDepartment(departmentFormat);
-      if(response != null) {
-        setTimeout(() =>{
-          void message.success('Created successfully');
+      if (response != null) {
+        setTimeout(() => {
+          void message.success("Created successfully");
           onClose();
           window.location.reload();
-        }, 200)
+        }, 200);
       }
       form.resetFields();
     } catch (error) {
       console.error("Error create data", error);
     }
-  }
+  };
   return (
     <>
       <Modal

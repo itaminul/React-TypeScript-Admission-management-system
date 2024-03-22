@@ -1,5 +1,10 @@
-import { Button, Table } from "antd";
-import  { useState } from "react";
+import { Button, Input, Space, Table } from "antd";
+import { useState } from "react";
+import {
+  SearchOutlined,
+  EditOutlined,
+  PlusSquareTwoTone,
+} from "@ant-design/icons";
 import CreatDepartmentModal from "./CreaetDepartmentModal";
 import EditDepartmentModal from "./EditDepartmentModal";
 import { useGetDepartmentDataQuery } from "../../../redux/features/service/departmentApiService";
@@ -7,14 +12,89 @@ function DepartmentTable() {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedRowId, setSelectedRow] = useState<number | null>(null);
-   const { data: department, error, isLoading } = useGetDepartmentDataQuery();
+  const { data: department, error, isLoading } = useGetDepartmentDataQuery();
 
+  if (isLoading) return <div>Loading...</div>;
 
-   if (isLoading) return <div>Loading...</div>;
+  if (error || !department) {
+    return <div>Error: Failed to fetch department data.</div>;
+  }
+  const [searchText, setSearchText] = useState("");
+  const [searchedColumn, setSearchedColumn] = useState("");
 
-   if (error || !department) {
-     return <div>Error: Failed to fetch department data.</div>;
-   }
+  const handleSearch = (
+    selectedKeys: React.Key[],
+    confirm: () => void,
+    dataIndex: string
+  ) => {
+    confirm();
+    setSearchText(selectedKeys[0] as string);
+    setSearchedColumn(dataIndex);
+  };
+
+  const handleReset = (clearFilters: () => void) => {
+    clearFilters();
+    setSearchText("");
+  };
+
+  const getColumnSearchProps = (dataIndex: string) => ({
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+    }: any) => (
+      <div style={{ padding: 8 }}>
+        <Input
+          placeholder={`Search ${dataIndex}`}
+          value={selectedKeys[0]}
+          onChange={(e) =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleSearch(selectedKeys, confirm, dataIndex);
+            }
+          }}
+          onKeyUp={(e) => {
+            if (e.key === "Enter") {
+              confirm();
+            }
+          }}
+          style={{ width: 188, marginBottom: 8, display: "block" }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+            icon={<SearchOutlined />}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Search
+          </Button>
+          <Button
+            onClick={() => handleReset(clearFilters)}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Reset
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered: boolean) => (
+      <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
+    ),
+
+    onFilter: (value: string, record: any) =>
+      record[dataIndex]
+        ? record[dataIndex]
+            .toString()
+            .toLowerCase()
+            .includes(value.toLowerCase())
+        : "",
+  });
 
   const columns = [
     {
@@ -22,7 +102,7 @@ function DepartmentTable() {
       width: 30,
       dataIndex: "serial",
       key: "serial",
-      render: (_: any, record: any, index: number) => index + 1
+      render: (_: any, record: any, index: number) => index + 1,
     },
     {
       title: "Department Name",
@@ -30,6 +110,7 @@ function DepartmentTable() {
       dataIndex: "departmentName",
       key: "departmentName",
       fixed: "left",
+      ...getColumnSearchProps("departmentName"),
     },
     {
       title: "Department Des",
@@ -37,6 +118,7 @@ function DepartmentTable() {
       dataIndex: "departmentDes",
       key: "departmentDes",
       fixed: "left",
+      ...getColumnSearchProps("departmentDes"),
     },
     {
       title: "Action",
@@ -45,7 +127,9 @@ function DepartmentTable() {
       width: 100,
       render: (params: any) => (
         <div>
-          <Button onClick={() => handleOpenEditModal(params.id)}>Edit</Button>
+          <Button type="primary" onClick={() => handleOpenEditModal(params.id)}>
+            <EditOutlined />
+          </Button>
         </div>
       ),
     },
@@ -76,11 +160,12 @@ function DepartmentTable() {
         style={{ float: "right" }}
         onClick={openCreateModal}
       >
-        Add
+        <PlusSquareTwoTone />
       </Button>
       <CreatDepartmentModal
         open={isCreateModalOpen}
         onClose={handleCreateModalClose}
+        title={""}
       />
       <Table
         dataSource={department}
