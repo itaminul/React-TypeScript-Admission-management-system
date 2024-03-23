@@ -1,4 +1,5 @@
-interface StudentDataType {
+export interface StudentDataType {
+  id: number;
   firstName: string
   middleName: string
   lastName: string
@@ -9,19 +10,31 @@ interface StudentDataType {
   emergencyMobile: string
   officeEmail: string
   personalEmail: string
-  empImage: string
-  empSignature: string
+  studentImage: string
+  studentSignature: string
   nationalId: number
-  department: string
   departmentId: number
   designationId: number
-  employeeType: number
-  empType: number
-  leaveApplicableStatus: boolean
+  studentType: number
   dateOfBirts: string
-  gender: number
   genderId: number
   religionId: number
   bloodGroupId: number
   maritialStatus: boolean
+}
+
+
+export interface CreateStudentsModalProps {
+  title: string,
+  open: boolean;
+  onClose: () => void
+}
+
+export interface EditStudentsProps extends CreateStudentsModalProps {
+  selectedId: number;
+  data: StudentDataType
+}
+
+export interface updateStudentsProps extends EditStudentsProps {
+  students: StudentDataType | null;
 }
