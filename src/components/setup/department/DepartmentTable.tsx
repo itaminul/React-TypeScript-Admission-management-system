@@ -14,11 +14,7 @@ function DepartmentTable() {
   const [selectedRowId, setSelectedRow] = useState<number | null>(null);
   const { data: department, error, isLoading } = useGetDepartmentDataQuery();
 
-  if (isLoading) return <div>Loading...</div>;
 
-  if (error || !department) {
-    return <div>Error: Failed to fetch department data.</div>;
-  }
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
 
@@ -96,6 +92,12 @@ function DepartmentTable() {
         : "",
   });
 
+
+  if (isLoading) return <div>Loading...</div>;
+
+  if (error || !department) {
+    return <div>Error: Failed to fetch department data.</div>;
+  }
   const columns = [
     {
       title: "Serial No",
