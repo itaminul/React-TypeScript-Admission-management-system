@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import Layouts from "../layout/Layouts";
 import { setBreadcrumb } from "../../redux/features/breadcrumbsSlice";
 import { useDispatch } from "react-redux";
+import StudentsDataTable from "./StudentsDataTable";
 function StudentInformationIndex() {
     const dispatch = useDispatch();
 
@@ -12,7 +13,7 @@ function StudentInformationIndex() {
     return(
         <>        
            <Layouts>
-           Student Information 
+            <StudentsDataTable />
            </Layouts>
         </>
     )
