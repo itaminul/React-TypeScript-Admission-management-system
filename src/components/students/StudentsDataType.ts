@@ -14,7 +14,8 @@ export interface StudentDataType {
   studentSignature: string
   nationalId: number
   departmentId: number
-  designationId: number
+  programmId: number
+  sessionId: number
   studentType: number
   dateOfBirts: string
   genderId: number

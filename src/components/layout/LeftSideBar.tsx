@@ -51,13 +51,13 @@ function LeftSideBar() {
               <Menu.Item key="2">Designation</Menu.Item>
             </Link>
           </SubMenu>
-          <SubMenu key="sub1" icon={<ContactsFilled />} title="Student">
+          <SubMenu key="sub2" icon={<ContactsFilled />} title="Student">
             <Link to="/student-info">
-              <Menu.Item key="2">Student Setup</Menu.Item>
+              <Menu.Item key="3">Student Setup</Menu.Item>
             </Link>
           </SubMenu>
 
-          <Menu.Item key="3" icon={<VideoCameraOutlined />}>
+          <Menu.Item key="4" icon={<VideoCameraOutlined />}>
             Option 2
           </Menu.Item>
         </Menu>
