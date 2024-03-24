@@ -57,7 +57,6 @@ function EditDepartmentModal({
     return <div>No data available for the selected department.</div>;
   }
 
-  console.log("organizations", organizations);
   return (
     <Modal
       title="Update department"
