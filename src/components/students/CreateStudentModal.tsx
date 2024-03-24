@@ -1,94 +1,210 @@
 import Modal from "antd/es/modal/Modal";
 import { CreateStudentsModalProps, StudentDataType } from "./StudentsDataType";
-import { Col, Form, Input, Row, Select } from "antd";
+import { Button, Col, Form, Input, Row, Select, Steps } from "antd";
+import { useState } from "react";
+const { Step } = Steps;
 
-function CreateStudentModal({title, open, onClose}: CreateStudentsModalProps) {
+function CreateStudentModal({
+  title,
+  open,
+  onClose,
+}: CreateStudentsModalProps) {
   const [form] = Form.useForm();
-  const onFinish = (values: StudentDataType) => {
+  const [currentStep, setCurrentStep] = useState<number>(0);
+  const handleNext = async () => {
+    try {
+      const values = await form.validateFields();
+      setCurrentStep(currentStep + 1);
+    } catch (error) {
+      console.error("Validation failed:", error);
+    }
+  };
 
-  }
+  const handlePrev = () => {
+    setCurrentStep(currentStep - 1);
+  };
+
+  const onFinish = (values: StudentDataType) => {};
   return (
     <>
       <Modal title={title} open={open} onCancel={onClose} width={1200}>
-        <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-          <Col span={12}>
-            <Form form={form} layout="vertical" onFinish={onFinish}>
-              <Form.Item
-                label="First Name"
-                name="departmentName"
-                rules={[
-                  { required: false, message: "Please enter department name!" },
-                ]}
-              >
-                <Input placeholder="First Name" />
-              </Form.Item>
-              <Form.Item
-                label="Middle Name"
-                name="departmentDes"
-                rules={[
-                  { required: true, message: "Please enter middle name!" },
-                ]}
-              >
-                <Input placeholder="Middle Name" />
-              </Form.Item>
-              <Form.Item
-                label="Last Name"
-                name="departmentDes"
-                rules={[{ required: true, message: "Please enter last name!" }]}
-              >
-                <Input placeholder="Last Name" />
-              </Form.Item>
+        <div>
+          <Steps current={currentStep}>
+            <Step title="Personal Information" />
+            <Step title="Address" />
+            <Step title="Education" />
+            <Step title="Attachment" />
+          </Steps>
+          <Form
+            form={form}
+            name="multi-step-form"
+            onFinish={onFinish}
+            initialValues={{ remember: true }}
+            layout="vertical"
+          >
+            {currentStep === 0 && (
+              <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+                <Col span={12}>
+                  <Form.Item
+                    label="First Name"
+                    name="firstName"
+                    rules={[
+                      {
+                        required: false,
+                        message: "Please enter First name!",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="First Name" />
+                  </Form.Item>
+                  <Form.Item
+                    label="Middle Name"
+                    name="middleName"
+                    rules={[
+                      { required: true, message: "Please enter middle name!" },
+                    ]}
+                  >
+                    <Input placeholder="Middle Name" />
+                  </Form.Item>
+                  <Form.Item
+                    label="Last Name"
+                    name="lastName"
+                    rules={[
+                      { required: true, message: "Please enter last name!" },
+                    ]}
+                  >
+                    <Input placeholder="Last Name" />
+                  </Form.Item>
 
-              <Form.Item
-                name="orgId"
-                label="Organization"
-                rules={[
-                  { required: true, message: "Please select organization!" },
-                ]}
-              >
-                <Select placeholder="Select organization"></Select>
-              </Form.Item>
-            </Form>
-          </Col>
-          <Col span={12} style={{ padding: "0px 8px" }}>
-            <Form form={form} layout="vertical" onFinish={onFinish}>
-              <Form.Item
-                label="Name"
-                name="departmentName"
-                rules={[
-                  { required: true, message: "Please enter department name!" },
-                ]}
-              >
-                <Input placeholder="Department Name" />
-              </Form.Item>
+                  <Form.Item
+                    name="mobileOne"
+                    label="Mobile"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please select mobile!",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="Mobile" />
+                  </Form.Item>
 
-              <Form.Item
-                label="Department Description"
-                name="departmentDes"
-                rules={[{ required: false }]}
-              >
-                <Input placeholder="Department Description" />
-              </Form.Item>
-              <Form.Item
-                label="Serial No"
-                name="serialNo"
-                rules={[{ required: false }]}
-              >
-                <Input placeholder="Serial No" />
-              </Form.Item>
+                  <Form.Item
+                    name="bloodGroupId"
+                    label="Blood Group"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please select Blood Group!",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="Blood Group" />
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item
+                    label="National ID"
+                    name="nationalId"
+                    rules={[
+                      {
+                        required: false,
+                        message: "Please enter National ID!",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="National ID" />
+                  </Form.Item>
+                  <Form.Item
+                    label="Date Of Birth"
+                    name="dateOfBirts"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter Date Of Birth!",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="Date Of Birth" />
+                  </Form.Item>
+                  <Form.Item
+                    label="Gender"
+                    name="genderId"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter Gender!",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="Gender" />
+                  </Form.Item>
 
+                  <Form.Item
+                    name="religionId"
+                    label="Religion"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please select Religion!",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="Religion" />
+                  </Form.Item>
+
+                  <Form.Item
+                    name="maritialStatus"
+                    label="Maritial Status"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please select Maritial Status!",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="Maritial Status" />
+                  </Form.Item>
+                </Col>
+              </Row>
+            )}
+            {currentStep === 1 && (
               <Form.Item
-                name="orgId"
-                label="Organization"
-                rules={[
-                  { required: true, message: "Please select organization!" },
-                ]}
+                label="Field 2"
+                name="field2"
+                rules={[{ required: true, message: "Please input Field 2!" }]}
               >
-                <Select placeholder="Select organization"></Select>
+                <Input />
               </Form.Item>
-            </Form>
-          </Col>
-        </Row>
+            )}
+            {currentStep === 2 && (
+              <Form.Item
+                label="Field 3"
+                name="field3"
+                rules={[{ required: true, message: "Please input Field 3!" }]}
+              >
+                <Input />
+              </Form.Item>
+            )}
+            <div style={{ textAlign: "right" }}>
+              {currentStep > 0 && (
+                <Button style={{ margin: "0 8px" }} onClick={handlePrev}>
+                  Previous
+                </Button>
+              )}
+              {currentStep < 2 && (
+                <Button type="primary" onClick={handleNext}>
+                  Next
+                </Button>
+              )}
+              {currentStep === 2 && (
+                <Button type="primary" htmlType="submit">
+                  Submit
+                </Button>
+              )}
+            </div>
+          </Form>
+        </div>
       </Modal>
     </>
   );

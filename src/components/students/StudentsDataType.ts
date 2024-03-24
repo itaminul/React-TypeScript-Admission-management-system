@@ -8,7 +8,6 @@ export interface StudentDataType {
   mobileOne: string
   mobileTwo: string
   emergencyMobile: string
-  officeEmail: string
   personalEmail: string
   studentImage: string
   studentSignature: string
