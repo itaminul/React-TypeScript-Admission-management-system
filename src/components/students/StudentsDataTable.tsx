@@ -7,6 +7,7 @@ import {
 } from "@ant-design/icons";
 import CreateStudentModal from "./CreateStudentModal";
 import EditStudentModal from "./EditStudentModal";
+import './studentsStyle.scss'
 function StudentsDataTable() {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -98,7 +99,7 @@ function StudentsDataTable() {
       render: (_: any, record: any, index: number) => index + 1,
     },
     {
-      title: "Department Name",
+      title: "Name",
       width: 100,
       dataIndex: "departmentName",
       key: "departmentName",
@@ -106,7 +107,7 @@ function StudentsDataTable() {
       ...getColumnSearchProps("departmentName"),
     },
     {
-      title: "Department Des",
+      title: "Department",
       width: 100,
       dataIndex: "departmentDes",
       key: "departmentDes",
@@ -144,36 +145,51 @@ function StudentsDataTable() {
     setIsEditModalOpen(false);
   };
 
-  
+  const studentDataSource = [
+    {
+      key: "1",
+      name: "Mike",
+      age: 32,
+      address: "10 Downing Street",
+    },
+    {
+      key: "2",
+      name: "John",
+      age: 42,
+      address: "10 Downing Street",
+    },
+  ];
   return (
     <>
-      <Button
-        type="primary"
-        style={{ float: "right" }}
-        onClick={openCreateModal}
-      >
-        <PlusSquareTwoTone />
-      </Button>
-      <CreateStudentModal
-        open={isCreateModalOpen}
-        onClose={handleCreateModalClose}
-        title={""}
-      />
-      <Table
-        dataSource={department}
-        columns={columns}
-        scroll={{ x: 1500, y: 650 }}
-        pagination={{
-          defaultPageSize: 20,
-          showSizeChanger: true,
-          pageSizeOptions: ["20", "30"],
-        }}
-      />
-      <EditStudentModal
-        open={isEditModalOpen}
-        onClose={editModalClose}
-        selectedRowId={selectedRowId}
-      />
+      <div className="responsive-table">
+        <Button
+          type="primary"
+          style={{ float: "right" }}
+          onClick={openCreateModal}
+        >
+          <PlusSquareTwoTone />
+        </Button>
+        <CreateStudentModal
+          open={isCreateModalOpen}
+          onClose={handleCreateModalClose}
+          title="Create Students"
+        />
+        <Table
+          dataSource={studentDataSource}
+          columns={columns}
+          scroll={{ x: 1500, y: 650 }}
+          pagination={{
+            defaultPageSize: 20,
+            showSizeChanger: true,
+            pageSizeOptions: ["20", "30"],
+          }}
+        />
+        <EditStudentModal
+          open={isEditModalOpen}
+          onClose={editModalClose}
+          selectedRowId={selectedRowId}
+        />
+      </div>
     </>
   );
 }

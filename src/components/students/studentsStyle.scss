@@ -1,0 +1,15 @@
+.responsive-table {
+  overflow-x: auto;
+
+ .ant-table {
+    flex: 1;
+    width: 100%;
+    max-width: 100%;
+
+    .ant-table-container {
+      overflow-x: auto;
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+}
