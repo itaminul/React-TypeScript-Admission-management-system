@@ -8,6 +8,7 @@ const endpoints = {
   login: "/user/login",
   departmentInfo: "/department",
   organizationInfo: "/organization",
+  religionInfo: "/religions",
 };
 memoizedCheckUniqueValues(endpoints);
 export default endpoints;
