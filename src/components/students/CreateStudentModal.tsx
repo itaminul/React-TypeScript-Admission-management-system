@@ -3,6 +3,7 @@ import { CreateStudentsModalProps, StudentDataType } from "./StudentsDataType";
 import { Button, Col, Form, Input, Row, Select, Steps } from "antd";
 import { useState } from "react";
 import { useGetReligionDataQuery } from "../../redux/features/service/religionApiService";
+import { useGetBloodGroupDataQuery } from "../../redux/features/service/bloodGroups";
 const { Step } = Steps;
 
 function CreateStudentModal({
@@ -12,6 +13,8 @@ function CreateStudentModal({
 }: CreateStudentsModalProps) {
   const [form] = Form.useForm();
   const { data: religions } = useGetReligionDataQuery();
+  const { data: bloodGroups } = useGetBloodGroupDataQuery();
+  console.log("blood", bloodGroups);
   const [currentStep, setCurrentStep] = useState<number>(0);
   const handleNext = async () => {
     try {
