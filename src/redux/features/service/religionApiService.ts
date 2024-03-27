@@ -20,8 +20,8 @@ export const religionApi = createApi({
       transformResponse: (response: any) => {
         const formateddata = response.results?.map((item: any) => ({
           id: item.id,
-          orgName: item.orgName,
-          orgDescription: item.orgDescription,
+          religionName: item.religionName,
+          religionDes: item.religionDes,
         }));
         return formateddata;
       },
