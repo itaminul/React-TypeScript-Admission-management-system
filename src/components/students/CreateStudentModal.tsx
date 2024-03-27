@@ -2,6 +2,7 @@ import Modal from "antd/es/modal/Modal";
 import { CreateStudentsModalProps, StudentDataType } from "./StudentsDataType";
 import { Button, Col, Form, Input, Row, Select, Steps } from "antd";
 import { useState } from "react";
+import { useGetReligionDataQuery } from "../../redux/features/service/religionApiService";
 const { Step } = Steps;
 
 function CreateStudentModal({
@@ -10,6 +11,7 @@ function CreateStudentModal({
   onClose,
 }: CreateStudentsModalProps) {
   const [form] = Form.useForm();
+  const { data: religions } = useGetReligionDataQuery();
   const [currentStep, setCurrentStep] = useState<number>(0);
   const handleNext = async () => {
     try {
@@ -150,7 +152,13 @@ function CreateStudentModal({
                       },
                     ]}
                   >
-                    <Input placeholder="Religion" />
+                    <Select placeholder="Select organization">
+                      {religions?.map((religion) => (
+                        <option key={religion.id} value={religion.id}>
+                          {religion.religionName}
+                        </option>
+                      ))}
+                    </Select>
                   </Form.Item>
 
                   <Form.Item
