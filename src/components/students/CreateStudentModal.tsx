@@ -1,10 +1,13 @@
 import Modal from "antd/es/modal/Modal";
 import { CreateStudentsModalProps, StudentDataType } from "./StudentsDataType";
-import { Button, Col, Form, Input, Row, Select, Steps } from "antd";
+import { Button, Col, Form, Input, RadioChangeEvent, Row, Select, Steps } from "antd";
 import { useState } from "react";
 import { useGetReligionDataQuery } from "../../redux/features/service/religionApiService";
 import { useGetBloodGroupDataQuery } from "../../redux/features/service/bloodGroups";
 const { Step } = Steps;
+import { DatePicker, Radio } from "antd";
+import type { DatePickerProps } from "antd";
+import moment, {Moment} from 'moment';
 
 function CreateStudentModal({
   title,
@@ -14,7 +17,6 @@ function CreateStudentModal({
   const [form] = Form.useForm();
   const { data: religions } = useGetReligionDataQuery();
   const { data: bloodGroups } = useGetBloodGroupDataQuery();
-  console.log("blood", bloodGroups);
   const [currentStep, setCurrentStep] = useState<number>(0);
   const handleNext = async () => {
     try {
@@ -28,7 +30,16 @@ function CreateStudentModal({
   const handlePrev = () => {
     setCurrentStep(currentStep - 1);
   };
-
+const onChangeDatePicker: DatePickerProps["onChange"] = (date, dateString) => {
+  console.log(date, dateString);
+};
+const disabledFutureDate = (current: Moment | null): boolean => {
+  return current ? current > moment().endOf('day') : false;
+}
+const [maritialStatusValue, setMaritialStatusValue] = useState();
+const onChangeMaritialStatus = (e: RadioChangeEvent) => {
+  setMaritialStatusValue(e.target.value);
+}
   const onFinish = (values: StudentDataType) => {};
   return (
     <>
@@ -104,7 +115,13 @@ function CreateStudentModal({
                       },
                     ]}
                   >
-                    <Input placeholder="Blood Group" />
+                    <Select placeholder="Select Blood Group">
+                      {bloodGroups?.map((bloodGroup) => (
+                        <option key={bloodGroup.id} value={bloodGroup.id}>
+                          {bloodGroup.bloodGroupName}
+                        </option>
+                      ))}
+                    </Select>
                   </Form.Item>
                 </Col>
                 <Col span={12}>
@@ -130,7 +147,12 @@ function CreateStudentModal({
                       },
                     ]}
                   >
-                    <Input placeholder="Date Of Birth" />
+                    <DatePicker
+                      style={{ width: "100%" }}
+                      onChange={onChangeDatePicker}
+                      format="YYYY-MM-DD"
+                      disabledDate={disabledFutureDate}
+                    />
                   </Form.Item>
                   <Form.Item
                     label="Gender"
@@ -142,7 +164,11 @@ function CreateStudentModal({
                       },
                     ]}
                   >
-                    <Input placeholder="Gender" />
+                    <Select placeholder="Gender">
+                      <option value="">--select--</option>
+                      <option value="1">Male</option>
+                      <option value="2">Female</option>
+                    </Select>
                   </Form.Item>
 
                   <Form.Item
@@ -174,7 +200,13 @@ function CreateStudentModal({
                       },
                     ]}
                   >
-                    <Input placeholder="Maritial Status" />
+                    <Radio.Group
+                      onChange={onChangeMaritialStatus}
+                      value={maritialStatusValue}
+                    >
+                      <Radio value={1}>Mareied</Radio>
+                      <Radio value={2}>Unmareied</Radio>
+                    </Radio.Group>
                   </Form.Item>
                 </Col>
               </Row>
