@@ -1,14 +1,25 @@
 import Modal from "antd/es/modal/Modal";
 import { CreateStudentsModalProps, StudentDataType } from "./StudentsDataType";
-import { Button, Col, Form, Input, RadioChangeEvent, Row, Select, Steps } from "antd";
+import {
+  Button,
+  Col,
+  Form,
+  Input,
+  RadioChangeEvent,
+  Row,
+  Select,
+  Steps,
+} from "antd";
 import { useState } from "react";
 import { useGetReligionDataQuery } from "../../redux/features/service/religionApiService";
 import { useGetBloodGroupDataQuery } from "../../redux/features/service/bloodGroups";
 const { Step } = Steps;
-import { DatePicker, Radio } from "antd";
+import { DatePicker, Radio, Typography } from "antd";
 import type { DatePickerProps } from "antd";
-import moment, {Moment} from 'moment';
-
+import moment, { Moment } from "moment";
+import { useGetDivisionDataQuery } from "../../redux/features/service/division";
+import { fail } from "assert";
+const { Title } = Typography;
 function CreateStudentModal({
   title,
   open,
@@ -17,6 +28,7 @@ function CreateStudentModal({
   const [form] = Form.useForm();
   const { data: religions } = useGetReligionDataQuery();
   const { data: bloodGroups } = useGetBloodGroupDataQuery();
+  const { data: divisions } = useGetDivisionDataQuery();
   const [currentStep, setCurrentStep] = useState<number>(0);
   const handleNext = async () => {
     try {
@@ -30,16 +42,19 @@ function CreateStudentModal({
   const handlePrev = () => {
     setCurrentStep(currentStep - 1);
   };
-const onChangeDatePicker: DatePickerProps["onChange"] = (date, dateString) => {
-  console.log(date, dateString);
-};
-const disabledFutureDate = (current: Moment | null): boolean => {
-  return current ? current > moment().endOf('day') : false;
-}
-const [maritialStatusValue, setMaritialStatusValue] = useState();
-const onChangeMaritialStatus = (e: RadioChangeEvent) => {
-  setMaritialStatusValue(e.target.value);
-}
+  const onChangeDatePicker: DatePickerProps["onChange"] = (
+    date,
+    dateString
+  ) => {
+    console.log(date, dateString);
+  };
+  const disabledFutureDate = (current: Moment | null): boolean => {
+    return current ? current > moment().endOf("day") : false;
+  };
+  const [maritialStatusValue, setMaritialStatusValue] = useState();
+  const onChangeMaritialStatus = (e: RadioChangeEvent) => {
+    setMaritialStatusValue(e.target.value);
+  };
   const onFinish = (values: StudentDataType) => {};
   return (
     <>
@@ -86,7 +101,7 @@ const onChangeMaritialStatus = (e: RadioChangeEvent) => {
                     label="Last Name"
                     name="lastName"
                     rules={[
-                      { required: true, message: "Please enter last name!" },
+                      { required: false, message: "Please enter last name!" },
                     ]}
                   >
                     <Input placeholder="Last Name" />
@@ -97,7 +112,7 @@ const onChangeMaritialStatus = (e: RadioChangeEvent) => {
                     label="Mobile"
                     rules={[
                       {
-                        required: true,
+                        required: false,
                         message: "Please select mobile!",
                       },
                     ]}
@@ -110,7 +125,7 @@ const onChangeMaritialStatus = (e: RadioChangeEvent) => {
                     label="Blood Group"
                     rules={[
                       {
-                        required: true,
+                        required: false,
                         message: "Please select Blood Group!",
                       },
                     ]}
@@ -142,7 +157,7 @@ const onChangeMaritialStatus = (e: RadioChangeEvent) => {
                     name="dateOfBirts"
                     rules={[
                       {
-                        required: true,
+                        required: false,
                         message: "Please enter Date Of Birth!",
                       },
                     ]}
@@ -159,7 +174,7 @@ const onChangeMaritialStatus = (e: RadioChangeEvent) => {
                     name="genderId"
                     rules={[
                       {
-                        required: true,
+                        required: false,
                         message: "Please enter Gender!",
                       },
                     ]}
@@ -176,7 +191,7 @@ const onChangeMaritialStatus = (e: RadioChangeEvent) => {
                     label="Religion"
                     rules={[
                       {
-                        required: true,
+                        required: false,
                         message: "Please select Religion!",
                       },
                     ]}
@@ -195,7 +210,7 @@ const onChangeMaritialStatus = (e: RadioChangeEvent) => {
                     label="Maritial Status"
                     rules={[
                       {
-                        required: true,
+                        required: false,
                         message: "Please select Maritial Status!",
                       },
                     ]}
@@ -212,13 +227,30 @@ const onChangeMaritialStatus = (e: RadioChangeEvent) => {
               </Row>
             )}
             {currentStep === 1 && (
-              <Form.Item
-                label="Field 2"
-                name="field2"
-                rules={[{ required: true, message: "Please input Field 2!" }]}
-              >
-                <Input />
-              </Form.Item>
+              <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+                <Col span={12}>
+                  <Title level={4}>Present Address</Title>
+                  <Form.Item
+                    name="divisionId"
+                    label="Division"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please select Division!",
+                      },
+                    ]}
+                  >
+                    <Select placeholder="Select division">
+                      {divisions?.map((division) => (
+                        <option key={division.id} value={division.id}>
+                          {division.divisionName}
+                        </option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                </Col>
+                <Col span={12}>Permanent address</Col>
+              </Row>
             )}
             {currentStep === 2 && (
               <Form.Item

@@ -1,9 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { API_BASE_URL } from "../../../endpoints";
-import { ReligionDataType } from "../../../components/setup/religion/ReligionDataType";
+import { DivisionDataType } from "../../../components/setup/division/DivisionDataType";
 
-export const religionApi = createApi({
-  reducerPath: "religionApi",
+export const divisionApi = createApi({
+  reducerPath: "divisionApi",
   baseQuery: fetchBaseQuery({
     baseUrl: API_BASE_URL,
     prepareHeaders: (headers) => {
@@ -15,13 +15,13 @@ export const religionApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getReligionData: builder.query<ReligionDataType[], void>({
-      query: () => "religions",
+    getDivisionData: builder.query<DivisionDataType[], void>({
+      query: () => "divisition",
       transformResponse: (response: any) => {
         const formateddata = response.results?.map((item: any) => ({
           id: item.id,
-          religionName: item.religionName,
-          religionDes: item.religionDes,
+          divisionName: item.divisionName,
+          divisionDes: item.divisionDes,
         }));
         return formateddata;
       },
@@ -29,4 +29,4 @@ export const religionApi = createApi({
   }),
 });
 
-export const { useGetReligionDataQuery } = religionApi;
+export const { useGetDivisionDataQuery } = divisionApi;
