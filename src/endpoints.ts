@@ -10,6 +10,7 @@ const endpoints = {
   organizationInfo: "/organization",
   religionInfo: "/religions",
   bloodGropsInfo: "/blood-groups",
+  divisionInfo: "/divisition",
 };
 memoizedCheckUniqueValues(endpoints);
 export default endpoints;
