@@ -1,11 +1,12 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import authReducer from './features/authSlice'
+import authReducer from "./features/authSlice";
 import breadcrumbsSlice from "./features/breadcrumbsSlice";
 import { departmentApi } from "./features/service/departmentApiService";
 import { organizationApi } from "./features/service/organizationApiService";
 import { religionApi } from "./features/service/religionApiService";
 import { bloodGroupApi } from "./features/service/bloodGroups";
 import { divisionApi } from "./features/service/division";
+import { districtApi } from "./features/service/districtApiService";
 const rootReducer = combineReducers({
   auth: authReducer,
   breadcrumbs: breadcrumbsSlice,
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
   [organizationApi.reducerPath]: organizationApi.reducer,
   [religionApi.reducerPath]: religionApi.reducer,
   [bloodGroupApi.reducerPath]: bloodGroupApi.reducer,
-  [divisionApi.reducerPath]: divisionApi.reducer
+  [divisionApi.reducerPath]: divisionApi.reducer,
+  [districtApi.reducerPath]: districtApi.reducer,
 });
 
 const middleware = (getDefaultMiddleware: any) =>
@@ -22,11 +24,12 @@ const middleware = (getDefaultMiddleware: any) =>
     organizationApi.middleware,
     religionApi.middleware,
     bloodGroupApi.middleware,
-    divisionApi.middleware
+    divisionApi.middleware,
+    districtApi.middleware,
   ]);
 export const store = configureStore({
-    reducer: rootReducer,
-    middleware
-})
-export type RootState  = ReturnType<typeof store.getState>
+  reducer: rootReducer,
+  middleware,
+});
+export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
