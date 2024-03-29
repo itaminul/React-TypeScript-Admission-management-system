@@ -18,7 +18,7 @@ import { DatePicker, Radio, Typography } from "antd";
 import type { DatePickerProps } from "antd";
 import moment, { Moment } from "moment";
 import { useGetDivisionDataQuery } from "../../redux/features/service/division";
-import { fail } from "assert";
+import { useGetDistrictDataQuery } from "../../redux/features/service/districtApiService";
 const { Title } = Typography;
 function CreateStudentModal({
   title,
@@ -29,6 +29,7 @@ function CreateStudentModal({
   const { data: religions } = useGetReligionDataQuery();
   const { data: bloodGroups } = useGetBloodGroupDataQuery();
   const { data: divisions } = useGetDivisionDataQuery();
+  const { data: districts } = useGetDistrictDataQuery();
   const [currentStep, setCurrentStep] = useState<number>(0);
   const handleNext = async () => {
     try {
@@ -244,6 +245,24 @@ function CreateStudentModal({
                       {divisions?.map((division) => (
                         <option key={division.id} value={division.id}>
                           {division.divisionName}
+                        </option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                  <Form.Item
+                    name="dristrictId"
+                    label="District"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please select Division!",
+                      },
+                    ]}
+                  >
+                    <Select placeholder="Select division">
+                      {districts?.map((district) => (
+                        <option key={district.id} value={district.id}>
+                          {district.districtName}
                         </option>
                       ))}
                     </Select>

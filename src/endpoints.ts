@@ -11,6 +11,7 @@ const endpoints = {
   religionInfo: "/religions",
   bloodGropsInfo: "/blood-groups",
   divisionInfo: "/divisition",
+  districtInfo: "/district",
 };
 memoizedCheckUniqueValues(endpoints);
 export default endpoints;
