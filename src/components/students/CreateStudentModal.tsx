@@ -267,8 +267,106 @@ function CreateStudentModal({
                       ))}
                     </Select>
                   </Form.Item>
+                  <Form.Item
+                    name="dristrictId"
+                    label="Thana"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please select Thana!",
+                      },
+                    ]}
+                  >
+                    <Select placeholder="Select division">
+                      {districts?.map((district) => (
+                        <option key={district.id} value={district.id}>
+                          {district.districtName}
+                        </option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                  <Form.Item
+                    label="Basha"
+                    name="Basha"
+                    rules={[
+                      {
+                        required: false,
+                        message: "Please enter National ID!",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="National ID" />
+                  </Form.Item>
                 </Col>
-                <Col span={12}>Permanent address</Col>
+                <Col span={12}>
+                  <Title level={4}>Permanent Address</Title>
+                  <Form.Item
+                    name="divisionId"
+                    label="Division"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please select Division!",
+                      },
+                    ]}
+                  >
+                    <Select placeholder="Select division">
+                      {divisions?.map((division) => (
+                        <option key={division.id} value={division.id}>
+                          {division.divisionName}
+                        </option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                  <Form.Item
+                    name="dristrictId"
+                    label="District"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please select Division!",
+                      },
+                    ]}
+                  >
+                    <Select placeholder="Select division">
+                      {districts?.map((district) => (
+                        <option key={district.id} value={district.id}>
+                          {district.districtName}
+                        </option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                  <Form.Item
+                    name="dristrictId"
+                    label="Thana"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please select Thana!",
+                      },
+                    ]}
+                  >
+                    <Select placeholder="Select division">
+                      {districts?.map((district) => (
+                        <option key={district.id} value={district.id}>
+                          {district.districtName}
+                        </option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                  <Form.Item
+                    label="Basha"
+                    name="Basha"
+                    rules={[
+                      {
+                        required: false,
+                        message: "Please enter National ID!",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="National ID" />
+                  </Form.Item>
+                </Col>
               </Row>
             )}
             {currentStep === 2 && (
