@@ -30,6 +30,7 @@ function CreateStudentModal({
   const { data: bloodGroups } = useGetBloodGroupDataQuery();
   const { data: divisions } = useGetDivisionDataQuery();
   const { data: districts } = useGetDistrictDataQuery();
+  console.log("divisions", divisions);
   const [currentStep, setCurrentStep] = useState<number>(0);
   const handleNext = async () => {
     try {
@@ -56,6 +57,11 @@ function CreateStudentModal({
   const onChangeMaritialStatus = (e: RadioChangeEvent) => {
     setMaritialStatusValue(e.target.value);
   };
+   const [districtsdata, setDistricts] = useState([]);
+
+  const handleDivisionChange = (divisionId: any) => {
+      setDistricts(divisionId);
+  }
   const onFinish = (values: StudentDataType) => {};
   return (
     <>
@@ -241,7 +247,10 @@ function CreateStudentModal({
                       },
                     ]}
                   >
-                    <Select placeholder="Select division">
+                    <Select
+                      placeholder="Select division"
+                      onChange={handleDivisionChange}
+                    >
                       {divisions?.map((division) => (
                         <option key={division.id} value={division.id}>
                           {division.divisionName}
@@ -355,7 +364,7 @@ function CreateStudentModal({
                     </Select>
                   </Form.Item>
 
-                   <Form.Item
+                  <Form.Item
                     name="dristrictId"
                     label="Thana"
                     rules={[
@@ -373,7 +382,7 @@ function CreateStudentModal({
                       ))}
                     </Select>
                   </Form.Item>
-                  
+
                   <Form.Item
                     label="Basha"
                     name="Basha"
