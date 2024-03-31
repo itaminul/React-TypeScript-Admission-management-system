@@ -354,6 +354,26 @@ function CreateStudentModal({
                       ))}
                     </Select>
                   </Form.Item>
+
+                   <Form.Item
+                    name="dristrictId"
+                    label="Thana"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please select Thana!",
+                      },
+                    ]}
+                  >
+                    <Select placeholder="Select division">
+                      {districts?.map((district) => (
+                        <option key={district.id} value={district.id}>
+                          {district.districtName}
+                        </option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                  
                   <Form.Item
                     label="Basha"
                     name="Basha"
