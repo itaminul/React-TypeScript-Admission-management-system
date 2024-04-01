@@ -27,7 +27,24 @@ export const districtApi = createApi({
         return formateddata;
       },
     }),
+    getDistrictsByDivision: builder.query({
+      query: (divisionId) => `getDisByDivisionId/${divisionId}`,
+    }),
+    updateDistrictById: builder.mutation<
+      void,
+      { id: number; formData: DistrictDataType }
+    >({
+      query: (data) => ({
+        url: `/getDisByDivisionId/${data.id}`,
+        method: "PATCH",
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useGetDistrictDataQuery } = districtApi;
+export const { 
+  useGetDistrictDataQuery,
+  useGetDistrictsByDivisionQuery,
+  useUpdateDistrictByIdMutation 
+  } = districtApi;

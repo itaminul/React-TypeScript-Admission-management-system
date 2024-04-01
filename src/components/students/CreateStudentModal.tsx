@@ -10,7 +10,7 @@ import {
   Select,
   Steps,
 } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useGetReligionDataQuery } from "../../redux/features/service/religionApiService";
 import { useGetBloodGroupDataQuery } from "../../redux/features/service/bloodGroups";
 const { Step } = Steps;
@@ -18,19 +18,21 @@ import { DatePicker, Radio, Typography } from "antd";
 import type { DatePickerProps } from "antd";
 import moment, { Moment } from "moment";
 import { useGetDivisionDataQuery } from "../../redux/features/service/division";
-import { useGetDistrictDataQuery } from "../../redux/features/service/districtApiService";
+import { useGetDistrictByDivisionIdMutation, useGetDistrictDataQuery, useGetDistrictsByDivisionQuery } from "../../redux/features/service/districtApiService";
+import { useDispatch, useSelector } from "react-redux";
 const { Title } = Typography;
 function CreateStudentModal({
   title,
   open,
   onClose,
 }: CreateStudentsModalProps) {
+  const dispatch = useDispatch()
   const [form] = Form.useForm();
   const { data: religions } = useGetReligionDataQuery();
   const { data: bloodGroups } = useGetBloodGroupDataQuery();
   const { data: divisions } = useGetDivisionDataQuery();
   const { data: districts } = useGetDistrictDataQuery();
-  console.log("divisions", divisions);
+
   const [currentStep, setCurrentStep] = useState<number>(0);
   const handleNext = async () => {
     try {
@@ -59,9 +61,24 @@ function CreateStudentModal({
   };
    const [districtsdata, setDistricts] = useState([]);
 
-  const handleDivisionChange = (divisionId: any) => {
-      setDistricts(divisionId);
-  }
+
+  const { division, selectedDivision } = useSelector(
+    (state: any) => state.divisionDistrict
+  );
+
+  const { data: district = [], isLoading } = useGetDistrictsByDivisionQuery(
+    selectedDivision ?? ""
+  );
+
+    useEffect(() => {
+      dispatch(fetchDivisions());
+    }, [dispatch]);
+
+    const handleDivisionChange = (value: any) => {
+      dispatch(selectedDivision(value));
+    };
+
+console.log("district", district);
   const onFinish = (values: StudentDataType) => {};
   return (
     <>
@@ -432,3 +449,7 @@ function CreateStudentModal({
 }
 
 export default CreateStudentModal;
+function fetchDivisions(): any {
+  throw new Error("Function not implemented.");
+}
+
