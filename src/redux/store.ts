@@ -7,9 +7,11 @@ import { religionApi } from "./features/service/religionApiService";
 import { bloodGroupApi } from "./features/service/bloodGroups";
 import { divisionApi } from "./features/service/division";
 import { districtApi } from "./features/service/districtApiService";
+import dropdonwReducer from "./features/dropdownSlice";
 const rootReducer = combineReducers({
   auth: authReducer,
   breadcrumbs: breadcrumbsSlice,
+  drpdown: dropdonwReducer,
   [departmentApi.reducerPath]: departmentApi.reducer,
   [organizationApi.reducerPath]: organizationApi.reducer,
   [religionApi.reducerPath]: religionApi.reducer,

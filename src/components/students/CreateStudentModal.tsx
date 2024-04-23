@@ -20,7 +20,9 @@ import moment, { Moment } from "moment";
 import { useGetDivisionDataQuery } from "../../redux/features/service/division";
 import { useGetDistrictByDivisionIdMutation, useGetDistrictDataQuery, useGetDistrictsByDivisionQuery } from "../../redux/features/service/districtApiService";
 import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@reduxjs/toolkit/query";
 const { Title } = Typography;
+import { setFirstDropdownValue, setSecondDropdownOptions } from "../../redux/features/dropdownSlice";
 function CreateStudentModal({
   title,
   open,
@@ -32,6 +34,8 @@ function CreateStudentModal({
   const { data: bloodGroups } = useGetBloodGroupDataQuery();
   const { data: divisions } = useGetDivisionDataQuery();
   const { data: districts } = useGetDistrictDataQuery();
+ 
+  import { setFirstDropdownOptions, setSecondDropdownOptions } from "../../redux/features/dropdownSlice";
 
   const [currentStep, setCurrentStep] = useState<number>(0);
   const handleNext = async () => {
